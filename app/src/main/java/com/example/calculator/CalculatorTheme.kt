@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -23,13 +24,11 @@ fun CalculatorTheme(
         Font(
             googleFont = GoogleFont(
                 name = "Dosis",
-                bestEffort = true,
             ),
             fontProvider = fontProvider,
         ),
     )
 
-    val materialTypography = Typography()
     val materialColorScheme = lightColorScheme()
     MaterialTheme(
         colorScheme = materialColorScheme.copy(
@@ -37,68 +36,79 @@ fun CalculatorTheme(
             background = Color.Black,
             onTertiaryContainer = Color.Yellow,
         ),
-        typography = Typography(
-            displayLarge = materialTypography.displayLarge.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            displayMedium = materialTypography.displayMedium.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            displaySmall = materialTypography.displaySmall.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            headlineLarge = materialTypography.headlineLarge.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            headlineMedium = materialTypography.headlineMedium.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            headlineSmall = materialTypography.headlineSmall.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            titleLarge = materialTypography.titleLarge.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            titleMedium = materialTypography.titleMedium.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            titleSmall = materialTypography.titleSmall.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            bodyLarge = materialTypography.bodyLarge.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            bodyMedium = materialTypography.bodyMedium.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            bodySmall = materialTypography.bodySmall.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            labelLarge = materialTypography.labelLarge.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            labelMedium = materialTypography.labelMedium.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
-            labelSmall = materialTypography.labelSmall.copy(
-                fontFamily = robotoMonoFont,
-                fontSize = 24.sp,
-            ),
+        typography = configureAppFont(
+            fontFamily = robotoMonoFont,
+            fontSize = 24.sp
         ),
         content = content,
+    )
+}
+
+private fun configureAppFont(
+    fontFamily: FontFamily,
+    fontSize: TextUnit,
+): Typography {
+    val materialTypography = Typography()
+    return Typography(
+        displayLarge = materialTypography.displayLarge.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        displayMedium = materialTypography.displayMedium.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        displaySmall = materialTypography.displaySmall.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        headlineLarge = materialTypography.headlineLarge.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        headlineMedium = materialTypography.headlineMedium.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        headlineSmall = materialTypography.headlineSmall.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        titleLarge = materialTypography.titleLarge.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        titleMedium = materialTypography.titleMedium.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        titleSmall = materialTypography.titleSmall.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        bodyLarge = materialTypography.bodyLarge.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        bodyMedium = materialTypography.bodyMedium.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        bodySmall = materialTypography.bodySmall.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        labelLarge = materialTypography.labelLarge.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        labelMedium = materialTypography.labelMedium.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
+        labelSmall = materialTypography.labelSmall.copy(
+            fontFamily = fontFamily,
+            fontSize = fontSize,
+        ),
     )
 }
