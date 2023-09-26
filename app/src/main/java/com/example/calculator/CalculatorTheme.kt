@@ -33,9 +33,14 @@ fun CalculatorTheme(
     MaterialTheme(
         colorScheme = materialColorScheme.copy(
             primary = Color(0xff548964),
-            background = Color.Black,
-            onTertiaryContainer = Color.Yellow,
-        ),
+            primaryContainer = Color(0xff42A610),
+            onPrimaryContainer = Color(0xffECFFDE),
+            secondary = Color(0xffEEEEF0),
+            onSecondary = Color(0xff504F54),
+            background = Color(0xffFCFCFC),
+            onBackground = Color(0xff43484C),
+
+            ),
         typography = configureAppFont(
             fontFamily = robotoMonoFont,
             fontSize = 24.sp

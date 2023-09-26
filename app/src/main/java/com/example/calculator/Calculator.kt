@@ -1,6 +1,5 @@
 package com.example.calculator
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +17,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,15 +34,7 @@ fun Calculator(
             .fillMaxSize()
             .padding(all = 12.dp),
     ) {
-        MaterialTheme(
-            colorScheme = lightColorScheme(background = Color.Green)
-        ) {
-            Display(
-                modifier = Modifier
-                    .weight(1F)
-                    .background(MaterialTheme.colorScheme.background)
-            )
-        }
+        Display(Modifier.weight(1F))
 
         EraseButton(
             modifier = Modifier
@@ -55,15 +45,15 @@ fun Calculator(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            NumberButton(
+            InputButton(
                 "7",
                 modifier = Modifier.weight(1F),
             )
-            NumberButton(
+            InputButton(
                 "8",
                 modifier = Modifier.weight(1F),
             )
-            NumberButton(
+            InputButton(
                 "9",
                 modifier = Modifier.weight(1F),
             )
@@ -77,15 +67,15 @@ fun Calculator(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            NumberButton(
+            InputButton(
                 "4",
                 modifier = Modifier.weight(1F),
             )
-            NumberButton(
+            InputButton(
                 "5",
                 modifier = Modifier.weight(1F),
             )
-            NumberButton(
+            InputButton(
                 "6",
                 modifier = Modifier.weight(1F),
             )
@@ -99,15 +89,15 @@ fun Calculator(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            NumberButton(
+            InputButton(
                 "1",
                 modifier = Modifier.weight(1F),
             )
-            NumberButton(
+            InputButton(
                 "2",
                 modifier = Modifier.weight(1F),
             )
-            NumberButton(
+            InputButton(
                 "3",
                 modifier = Modifier.weight(1F),
             )
@@ -121,11 +111,11 @@ fun Calculator(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            NumberButton(
+            InputButton(
                 "0",
                 modifier = Modifier.weight(1F),
             )
-            NumberButton(
+            InputButton(
                 ".",
                 modifier = Modifier.weight(1F),
             )
@@ -133,10 +123,7 @@ fun Calculator(
                 "+",
                 modifier = Modifier.weight(1F),
             )
-            OperatorButton(
-                "=",
-                modifier = Modifier.weight(1F),
-            )
+            EqualsButton(Modifier.weight(1F))
         }
     }
 }
@@ -173,6 +160,21 @@ private fun EraseButton(
 }
 
 @Composable
+private fun EqualsButton(
+    modifier: Modifier = Modifier,
+) {
+    InputButton(
+        text = "=",
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        ),
+        fontWeight = FontWeight.Bold
+    )
+}
+
+@Composable
 private fun OperatorButton(
     text: String,
     modifier: Modifier = Modifier,
@@ -182,24 +184,9 @@ private fun OperatorButton(
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = DefaultInputButtonContainerColor,
-            contentColor = Color(0xff388709),
+            contentColor = MaterialTheme.colorScheme.primary,
         ),
         fontWeight = FontWeight.Bold
-    )
-}
-
-@Composable
-private fun NumberButton(
-    text: String,
-    modifier: Modifier = Modifier,
-) {
-    InputButton(
-        text = text,
-        modifier = modifier,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = DefaultInputButtonContainerColor,
-            contentColor = Color.Black,
-        ),
     )
 }
 
@@ -207,7 +194,10 @@ private fun NumberButton(
 private fun InputButton(
     text: String,
     modifier: Modifier = Modifier,
-    colors: ButtonColors = ButtonDefaults.buttonColors(contentColor = Color.Black),
+    colors: ButtonColors = ButtonDefaults.buttonColors(
+        containerColor = DefaultInputButtonContainerColor,
+        contentColor = MaterialTheme.colorScheme.onSecondary,
+    ),
     fontWeight: FontWeight = FontWeight.Normal,
 ) {
     Button(
@@ -227,7 +217,7 @@ private fun InputButton(
 
 private val DefaultInputButtonContainerColor: Color
     @Composable
-    get() = MaterialTheme.colorScheme.onTertiaryContainer
+    get() = MaterialTheme.colorScheme.secondary
 
 @Composable
 @Preview(
