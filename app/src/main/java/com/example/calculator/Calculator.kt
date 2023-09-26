@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -170,6 +171,7 @@ private fun EqualsButton(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
+        fontSize = MaterialTheme.typography.bodyMedium.fontSize * 1.5,
         fontWeight = FontWeight.Bold
     )
 }
@@ -186,6 +188,7 @@ private fun OperatorButton(
             containerColor = DefaultInputButtonContainerColor,
             contentColor = MaterialTheme.colorScheme.primary,
         ),
+        fontSize = MaterialTheme.typography.bodyMedium.fontSize * 1.5,
         fontWeight = FontWeight.Bold
     )
 }
@@ -198,6 +201,7 @@ private fun InputButton(
         containerColor = DefaultInputButtonContainerColor,
         contentColor = MaterialTheme.colorScheme.onSecondary,
     ),
+    fontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize,
     fontWeight: FontWeight = FontWeight.Normal,
 ) {
     Button(
@@ -210,6 +214,7 @@ private fun InputButton(
     ) {
         Text(
             text = text,
+            fontSize = fontSize,
             fontWeight = fontWeight,
         )
     }
