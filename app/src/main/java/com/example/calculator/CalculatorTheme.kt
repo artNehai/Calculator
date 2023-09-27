@@ -2,6 +2,7 @@ package com.example.calculator
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -39,7 +40,6 @@ fun CalculatorTheme(
             onSecondary = Color(0xff504F54),
             background = Color(0xffFCFCFC),
             onBackground = Color(0xff43484C),
-
             ),
         typography = configureAppFont(
             fontFamily = robotoMonoFont,

@@ -3,7 +3,9 @@ package com.example.calculator
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,16 +17,16 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -47,20 +49,20 @@ fun Calculator(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            InputButton(
-                "7",
+            NumberButton(
+                text = "7",
                 modifier = Modifier.weight(1F),
             )
-            InputButton(
-                "8",
+            NumberButton(
+                text = "8",
                 modifier = Modifier.weight(1F),
             )
-            InputButton(
-                "9",
+            NumberButton(
+                text = "9",
                 modifier = Modifier.weight(1F),
             )
             OperatorButton(
-                text = "÷",
+                icon = ImageVector.vectorResource(R.drawable.division_sign),
                 modifier = Modifier.weight(1F),
             )
         }
@@ -69,20 +71,20 @@ fun Calculator(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            InputButton(
-                "4",
+            NumberButton(
+                text = "4",
                 modifier = Modifier.weight(1F),
             )
-            InputButton(
-                "5",
+            NumberButton(
+                text = "5",
                 modifier = Modifier.weight(1F),
             )
-            InputButton(
-                "6",
+            NumberButton(
+                text = "6",
                 modifier = Modifier.weight(1F),
             )
             OperatorButton(
-                "×",
+                icon = ImageVector.vectorResource(R.drawable.multiplication_sign),
                 modifier = Modifier.weight(1F),
             )
         }
@@ -91,20 +93,20 @@ fun Calculator(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            InputButton(
-                "1",
+            NumberButton(
+                text = "1",
                 modifier = Modifier.weight(1F),
             )
-            InputButton(
-                "2",
+            NumberButton(
+                text = "2",
                 modifier = Modifier.weight(1F),
             )
-            InputButton(
-                "3",
+            NumberButton(
+                text = "3",
                 modifier = Modifier.weight(1F),
             )
             OperatorButton(
-                "-",
+                icon = ImageVector.vectorResource(R.drawable.minus_sign),
                 modifier = Modifier.weight(1F),
             )
         }
@@ -113,19 +115,22 @@ fun Calculator(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            InputButton(
-                "0",
+            NumberButton(
+                text = "0",
                 modifier = Modifier.weight(1F),
             )
-            InputButton(
-                ".",
+            NumberButton(
+                text = ".",
                 modifier = Modifier.weight(1F),
             )
             OperatorButton(
-                "+",
+                icon = ImageVector.vectorResource(R.drawable.plus_sign),
                 modifier = Modifier.weight(1F),
             )
-            EqualsButton(Modifier.weight(1F))
+            EqualsButton(
+                icon = ImageVector.vectorResource(R.drawable.equals_sign),
+                modifier = Modifier.weight(1F),
+            )
         }
     }
 }
@@ -149,14 +154,14 @@ private fun Display(
 private fun EraseButton(
     modifier: Modifier = Modifier,
 ) {
-    OutlinedButton(
+    IconButton(
         onClick = { /*TODO*/ },
         modifier = modifier,
-        border = null,
     ) {
         Icon(
             imageVector = Icons.Outlined.Backspace,
             contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
         )
     }
 
@@ -164,47 +169,65 @@ private fun EraseButton(
 
 @Composable
 private fun EqualsButton(
+    icon: ImageVector,
     modifier: Modifier = Modifier,
 ) {
     InputButton(
-        text = "=",
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
-        fontSize = MaterialTheme.typography.bodyMedium.fontSize * 1.5,
-        fontWeight = FontWeight.Bold
-    )
+        contentPadding = ButtonDefaults.ButtonWithIconContentPadding
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+        )
+    }
 }
 
 @Composable
 private fun OperatorButton(
-    text: String,
+    icon: ImageVector,
     modifier: Modifier = Modifier,
 ) {
     InputButton(
-        text = text,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = DefaultInputButtonContainerColor,
             contentColor = MaterialTheme.colorScheme.primary,
         ),
-        fontSize = MaterialTheme.typography.bodyMedium.fontSize * 1.5,
-        fontWeight = FontWeight.Bold
-    )
+        contentPadding = ButtonDefaults.ButtonWithIconContentPadding
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+        )
+    }
+}
+
+@Composable
+private fun NumberButton(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    InputButton(
+        modifier = modifier
+    ) {
+        Text(text = text)
+    }
 }
 
 @Composable
 private fun InputButton(
-    text: String,
     modifier: Modifier = Modifier,
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = DefaultInputButtonContainerColor,
         contentColor = MaterialTheme.colorScheme.onSecondary,
     ),
-    fontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize,
-    fontWeight: FontWeight = FontWeight.Normal,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    content: @Composable (RowScope.() -> Unit),
 ) {
     Button(
         onClick = { /*TODO*/ },
@@ -213,13 +236,9 @@ private fun InputButton(
             .aspectRatio(1F),
         shape = CircleShape,
         colors = colors,
-    ) {
-        Text(
-            text = text,
-            fontSize = fontSize,
-            fontWeight = fontWeight,
-        )
-    }
+        contentPadding = contentPadding,
+        content = content,
+    )
 }
 
 private val DefaultInputButtonContainerColor: Color
