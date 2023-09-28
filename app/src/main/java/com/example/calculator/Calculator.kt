@@ -16,6 +16,7 @@ import androidx.compose.material.icons.outlined.Backspace
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -38,12 +39,15 @@ fun Calculator(
             .fillMaxSize()
             .padding(all = 12.dp),
     ) {
+
         Display(Modifier.weight(1F))
 
         EraseButton(
             modifier = Modifier
                 .align(Alignment.End)
         )
+
+        Divider(Modifier.padding(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -135,6 +139,18 @@ fun Calculator(
     }
 }
 
+@Preview
+@Composable
+private fun IconButtonPreview() {
+    CalculatorTheme {
+        InputButton(
+            modifier = Modifier,
+        ) {
+            Text("9")
+        }
+    }
+}
+
 @Composable
 private fun Display(
     modifier: Modifier = Modifier,
@@ -178,7 +194,7 @@ private fun EqualsButton(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
-        contentPadding = ButtonDefaults.ButtonWithIconContentPadding
+        contentPadding = OperatorButtonPaddingValues,
     ) {
         Icon(
             imageVector = icon,
@@ -198,7 +214,7 @@ private fun OperatorButton(
             containerColor = DefaultInputButtonContainerColor,
             contentColor = MaterialTheme.colorScheme.primary,
         ),
-        contentPadding = ButtonDefaults.ButtonWithIconContentPadding
+        contentPadding = OperatorButtonPaddingValues,
     ) {
         Icon(
             imageVector = icon,
@@ -213,9 +229,9 @@ private fun NumberButton(
     modifier: Modifier = Modifier,
 ) {
     InputButton(
-        modifier = modifier
+        modifier = modifier,
     ) {
-        Text(text = text)
+        Text(text)
     }
 }
 
@@ -244,6 +260,14 @@ private fun InputButton(
 private val DefaultInputButtonContainerColor: Color
     @Composable
     get() = MaterialTheme.colorScheme.secondary
+
+private val OperatorButtonPaddingValues =
+    PaddingValues(
+        start = 20.dp,
+        top = 8.dp,
+        end = 20.dp,
+        bottom = 8.dp,
+    )
 
 @Composable
 @Preview(
