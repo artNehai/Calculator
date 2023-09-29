@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -26,9 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlin.math.max
+import kotlin.math.min
 
 @Composable
 fun Calculator(
@@ -47,7 +48,10 @@ fun Calculator(
                 .align(Alignment.End)
         )
 
-        Divider(Modifier.padding(16.dp))
+        Divider(
+            modifier = Modifier.padding(16.dp),
+            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.1F),
+        )
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -55,19 +59,19 @@ fun Calculator(
         ) {
             NumberButton(
                 text = "7",
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             NumberButton(
                 text = "8",
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             NumberButton(
                 text = "9",
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             OperatorButton(
                 icon = ImageVector.vectorResource(R.drawable.division_sign),
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
         }
 
@@ -77,19 +81,19 @@ fun Calculator(
         ) {
             NumberButton(
                 text = "4",
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             NumberButton(
                 text = "5",
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             NumberButton(
                 text = "6",
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             OperatorButton(
                 icon = ImageVector.vectorResource(R.drawable.multiplication_sign),
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
         }
 
@@ -99,19 +103,19 @@ fun Calculator(
         ) {
             NumberButton(
                 text = "1",
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             NumberButton(
                 text = "2",
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             NumberButton(
                 text = "3",
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             OperatorButton(
                 icon = ImageVector.vectorResource(R.drawable.minus_sign),
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
         }
 
@@ -121,32 +125,20 @@ fun Calculator(
         ) {
             NumberButton(
                 text = "0",
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             NumberButton(
                 text = ".",
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             OperatorButton(
                 icon = ImageVector.vectorResource(R.drawable.plus_sign),
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
             EqualsButton(
                 icon = ImageVector.vectorResource(R.drawable.equals_sign),
-                modifier = Modifier.weight(1F),
+                modifier = Modifier,
             )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun IconButtonPreview() {
-    CalculatorTheme {
-        InputButton(
-            modifier = Modifier,
-        ) {
-            Text("9")
         }
     }
 }
@@ -194,7 +186,6 @@ private fun EqualsButton(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
-        contentPadding = OperatorButtonPaddingValues,
     ) {
         Icon(
             imageVector = icon,
@@ -214,7 +205,6 @@ private fun OperatorButton(
             containerColor = DefaultInputButtonContainerColor,
             contentColor = MaterialTheme.colorScheme.primary,
         ),
-        contentPadding = OperatorButtonPaddingValues,
     ) {
         Icon(
             imageVector = icon,
@@ -242,32 +232,43 @@ private fun InputButton(
         containerColor = DefaultInputButtonContainerColor,
         contentColor = MaterialTheme.colorScheme.onSecondary,
     ),
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    content: @Composable (RowScope.() -> Unit),
+    content: @Composable () -> Unit,
 ) {
     Button(
         onClick = { /*TODO*/ },
-        modifier = modifier
-            .padding(all = 8.dp)
-            .aspectRatio(1F),
+        modifier = modifier,
         shape = CircleShape,
         colors = colors,
-        contentPadding = contentPadding,
-        content = content,
-    )
+        contentPadding = PaddingValues(all = 16.dp),
+    ) {
+        Box(Modifier.squareSize()) {
+            content()
+        }
+    }
 }
+
+private fun Modifier.squareSize(): Modifier =
+    layout { measurable, constraints ->
+        val placeable = measurable.measure(constraints)
+        val desiredSize = max(placeable.width, placeable.height)
+        val size = if (desiredSize > constraints.maxWidth || desiredSize > constraints.maxHeight) {
+            min(constraints.maxWidth, constraints.maxHeight)
+        } else {
+            desiredSize
+        }
+        layout(
+            width = size,
+            height = size,
+        ) {
+            val x = (size - placeable.width) / 2
+            val y = (size - placeable.height) / 2
+            placeable.placeRelative(x, y)
+        }
+    }
 
 private val DefaultInputButtonContainerColor: Color
     @Composable
     get() = MaterialTheme.colorScheme.secondary
-
-private val OperatorButtonPaddingValues =
-    PaddingValues(
-        start = 20.dp,
-        top = 8.dp,
-        end = 20.dp,
-        bottom = 8.dp,
-    )
 
 @Composable
 @Preview(
