@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Backspace
 import androidx.compose.material3.Button
@@ -24,12 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlin.math.max
-import kotlin.math.min
 
 @Composable
 fun Calculator(
@@ -41,7 +40,9 @@ fun Calculator(
             .padding(all = 12.dp),
     ) {
 
-        Display(Modifier.weight(1F))
+        Display(
+            modifier = Modifier.weight(1F),
+        )
 
         EraseButton(
             modifier = Modifier
@@ -53,92 +54,47 @@ fun Calculator(
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.1F),
         )
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+        Column(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            NumberButton(
-                text = "7",
-                modifier = Modifier,
-            )
-            NumberButton(
-                text = "8",
-                modifier = Modifier,
-            )
-            NumberButton(
-                text = "9",
-                modifier = Modifier,
-            )
-            OperatorButton(
-                icon = ImageVector.vectorResource(R.drawable.division_sign),
-                modifier = Modifier,
-            )
-        }
+            NumpadRow {
+                NumberButton(text = "7")
+                NumberButton(text = "8")
+                NumberButton(text = "9")
+                OperatorButton(
+                    imageVector = ImageVector.vectorResource(R.drawable.division_sign),
+                )
+            }
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            NumberButton(
-                text = "4",
-                modifier = Modifier,
-            )
-            NumberButton(
-                text = "5",
-                modifier = Modifier,
-            )
-            NumberButton(
-                text = "6",
-                modifier = Modifier,
-            )
-            OperatorButton(
-                icon = ImageVector.vectorResource(R.drawable.multiplication_sign),
-                modifier = Modifier,
-            )
-        }
+            NumpadRow {
+                NumberButton(text = "4")
+                NumberButton(text = "5")
+                NumberButton(text = "6")
+                OperatorButton(
+                    imageVector = ImageVector.vectorResource(R.drawable.multiplication_sign),
+                )
+            }
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            NumberButton(
-                text = "1",
-                modifier = Modifier,
-            )
-            NumberButton(
-                text = "2",
-                modifier = Modifier,
-            )
-            NumberButton(
-                text = "3",
-                modifier = Modifier,
-            )
-            OperatorButton(
-                icon = ImageVector.vectorResource(R.drawable.minus_sign),
-                modifier = Modifier,
-            )
-        }
+            NumpadRow {
+                NumberButton(text = "1")
+                NumberButton(text = "2")
+                NumberButton(text = "3")
+                OperatorButton(
+                    imageVector = ImageVector.vectorResource(R.drawable.minus_sign),
+                )
+            }
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            NumberButton(
-                text = "0",
-                modifier = Modifier,
-            )
-            NumberButton(
-                text = ".",
-                modifier = Modifier,
-            )
-            OperatorButton(
-                icon = ImageVector.vectorResource(R.drawable.plus_sign),
-                modifier = Modifier,
-            )
-            EqualsButton(
-                icon = ImageVector.vectorResource(R.drawable.equals_sign),
-                modifier = Modifier,
-            )
+            NumpadRow {
+                NumberButton(text = "0")
+                NumberButton(text = ".")
+                OperatorButton(
+                    imageVector = ImageVector.vectorResource(R.drawable.plus_sign),
+                )
+                EqualsButton(
+                    icon = ImageVector.vectorResource(R.drawable.equals_sign),
+                )
+            }
         }
     }
 }
@@ -157,6 +113,17 @@ private fun Display(
         )
     }
 }
+
+@Composable
+private fun NumpadRow(
+    modifier: Modifier = Modifier,
+    content: @Composable RowScope.() -> Unit,
+) =
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(24.dp),
+        content = content,
+    )
 
 @Composable
 private fun EraseButton(
@@ -196,7 +163,7 @@ private fun EqualsButton(
 
 @Composable
 private fun OperatorButton(
-    icon: ImageVector,
+    imageVector: ImageVector,
     modifier: Modifier = Modifier,
 ) {
     InputButton(
@@ -207,7 +174,7 @@ private fun OperatorButton(
         ),
     ) {
         Icon(
-            imageVector = icon,
+            imageVector = imageVector,
             contentDescription = null,
         )
     }
@@ -234,37 +201,21 @@ private fun InputButton(
     ),
     content: @Composable () -> Unit,
 ) {
+    val maxSize = 64.dp
     Button(
         onClick = { /*TODO*/ },
-        modifier = modifier,
-        shape = CircleShape,
+        modifier = modifier
+            .sizeIn(
+                maxWidth = maxSize,
+                maxHeight = maxSize,
+            )
+            .aspectRatio(1f),
         colors = colors,
         contentPadding = PaddingValues(all = 16.dp),
     ) {
-        Box(Modifier.squareSize()) {
-            content()
-        }
+        content()
     }
 }
-
-private fun Modifier.squareSize(): Modifier =
-    layout { measurable, constraints ->
-        val placeable = measurable.measure(constraints)
-        val desiredSize = max(placeable.width, placeable.height)
-        val size = if (desiredSize > constraints.maxWidth || desiredSize > constraints.maxHeight) {
-            min(constraints.maxWidth, constraints.maxHeight)
-        } else {
-            desiredSize
-        }
-        layout(
-            width = size,
-            height = size,
-        ) {
-            val x = (size - placeable.width) / 2
-            val y = (size - placeable.height) / 2
-            placeable.placeRelative(x, y)
-        }
-    }
 
 private val DefaultInputButtonContainerColor: Color
     @Composable
