@@ -50,6 +50,7 @@ fun Calculator(
         )
 
         EraseButton(
+            displayText = displayText,
             modifier = Modifier
                 .align(Alignment.End)
         )
@@ -171,10 +172,13 @@ private fun NumpadRow(
 
 @Composable
 private fun EraseButton(
+    displayText: MutableState<String>,
     modifier: Modifier = Modifier,
 ) {
     IconButton(
-        onClick = { /*TODO*/ },
+        onClick = {
+            displayText.value = displayText.value.dropLast(1)
+        },
         modifier = modifier,
     ) {
         Icon(
