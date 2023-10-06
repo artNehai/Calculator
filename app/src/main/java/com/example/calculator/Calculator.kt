@@ -22,6 +22,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,8 +42,10 @@ fun Calculator(
             .fillMaxSize()
             .padding(all = 12.dp),
     ) {
+        val displayText = remember { mutableStateOf("") }
 
         Display(
+            text = displayText.value,
             modifier = Modifier.weight(1F),
         )
 
@@ -59,40 +64,78 @@ fun Calculator(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             NumpadRow {
-                NumberButton(text = "7")
-                NumberButton(text = "8")
-                NumberButton(text = "9")
+                NumberButton(
+                    text = "7",
+                    displayText = displayText,
+                )
+                NumberButton(
+                    text = "8",
+                    displayText = displayText,
+                )
+                NumberButton(
+                    text = "9",
+                    displayText = displayText,
+                )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.division_sign),
+                    displayText = displayText,
                 )
             }
 
             NumpadRow {
-                NumberButton(text = "4")
-                NumberButton(text = "5")
-                NumberButton(text = "6")
+                NumberButton(
+                    text = "4",
+                    displayText = displayText,
+                )
+                NumberButton(
+                    text = "5",
+                    displayText = displayText,
+                )
+                NumberButton(
+                    text = "6",
+                    displayText = displayText,
+                )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.multiplication_sign),
+                    displayText = displayText,
                 )
             }
 
             NumpadRow {
-                NumberButton(text = "1")
-                NumberButton(text = "2")
-                NumberButton(text = "3")
+                NumberButton(
+                    text = "1",
+                    displayText = displayText,
+                )
+                NumberButton(
+                    text = "2",
+                    displayText = displayText,
+                )
+                NumberButton(
+                    text = "3",
+                    displayText = displayText,
+                )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.minus_sign),
+                    displayText = displayText,
                 )
             }
 
             NumpadRow {
-                NumberButton(text = "0")
-                NumberButton(text = ".")
+                NumberButton(
+                    text = "0",
+                    displayText = displayText,
+                )
+                NumberButton(
+                    text = ".",
+                    displayText = displayText,
+                )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.plus_sign),
+                    displayText = displayText,
                 )
                 EqualsButton(
                     icon = ImageVector.vectorResource(R.drawable.equals_sign),
+                    displayText = displayText,
                 )
             }
         }
@@ -101,6 +144,7 @@ fun Calculator(
 
 @Composable
 private fun Display(
+    text: String,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -109,7 +153,7 @@ private fun Display(
         contentAlignment = Alignment.CenterEnd,
     ) {
         Text(
-            text = "Display",
+            text = text,
         )
     }
 }
@@ -145,9 +189,11 @@ private fun EraseButton(
 @Composable
 private fun EqualsButton(
     icon: ImageVector,
+    displayText: MutableState<String>,
     modifier: Modifier = Modifier,
 ) {
     InputButton(
+        displayText = displayText,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -164,9 +210,11 @@ private fun EqualsButton(
 @Composable
 private fun OperatorButton(
     imageVector: ImageVector,
+    displayText: MutableState<String>,
     modifier: Modifier = Modifier,
 ) {
     InputButton(
+        displayText = displayText,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = DefaultInputButtonContainerColor,
@@ -183,9 +231,11 @@ private fun OperatorButton(
 @Composable
 private fun NumberButton(
     text: String,
+    displayText: MutableState<String>,
     modifier: Modifier = Modifier,
 ) {
     InputButton(
+        displayText = displayText,
         modifier = modifier,
     ) {
         Text(text)
@@ -199,11 +249,14 @@ private fun InputButton(
         containerColor = DefaultInputButtonContainerColor,
         contentColor = MaterialTheme.colorScheme.onSecondary,
     ),
+    displayText: MutableState<String>,
     content: @Composable () -> Unit,
 ) {
     val maxSize = 64.dp
     Button(
-        onClick = { /*TODO*/ },
+        onClick = {
+            displayText.value += "a"
+        },
         modifier = modifier
             .sizeIn(
                 maxWidth = maxSize,
