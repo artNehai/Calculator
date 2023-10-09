@@ -9,9 +9,18 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Application() {
+fun Application(
+    displayText: String,
+    onNumberButtonClick: (String) -> Unit,
+    onEraseButtonClick: () -> Unit,
+    onOperatorButtonClick: (String) -> Unit,
+) {
     Scaffold { paddingValues ->
         Calculator(
+            displayText = displayText,
+            onNumberButtonClick = onNumberButtonClick,
+            onEraseButtonClick = onEraseButtonClick,
+            onOperatorButtonClick = onOperatorButtonClick,
             modifier = Modifier
                 .padding(paddingValues),
         )
@@ -22,6 +31,11 @@ fun Application() {
 @Preview
 private fun CalculatorThemePreview() {
     CalculatorTheme {
-        Application()
+        Application(
+            displayText = "43",
+            onEraseButtonClick = {},
+            onNumberButtonClick = {},
+            onOperatorButtonClick = {},
+        )
     }
 }

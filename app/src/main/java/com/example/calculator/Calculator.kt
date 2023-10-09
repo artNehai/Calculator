@@ -22,9 +22,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +32,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Calculator(
+    displayText: String,
+    onEraseButtonClick: () -> Unit,
+    onNumberButtonClick: (String) -> Unit,
+    onOperatorButtonClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -42,17 +43,16 @@ fun Calculator(
             .fillMaxSize()
             .padding(all = 12.dp),
     ) {
-        val displayText = remember { mutableStateOf("") }
 
         Display(
-            text = displayText.value,
+            text = displayText,
             modifier = Modifier.weight(1F),
         )
 
         EraseButton(
-            displayText = displayText,
+            onEraseButtonClick = onEraseButtonClick,
             modifier = Modifier
-                .align(Alignment.End)
+                .align(Alignment.End),
         )
 
         Divider(
@@ -67,76 +67,71 @@ fun Calculator(
             NumpadRow {
                 NumberButton(
                     text = "7",
-                    displayText = displayText,
+                    onClick = { onNumberButtonClick("7") },
                 )
                 NumberButton(
                     text = "8",
-                    displayText = displayText,
+                    onClick = { onNumberButtonClick("8") },
                 )
                 NumberButton(
                     text = "9",
-                    displayText = displayText,
+                    onClick = { onNumberButtonClick("9") },
                 )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.division_sign),
-                    displayText = displayText,
                 )
             }
 
             NumpadRow {
                 NumberButton(
                     text = "4",
-                    displayText = displayText,
+                    onClick = { onNumberButtonClick("4") },
                 )
                 NumberButton(
                     text = "5",
-                    displayText = displayText,
+                    onClick = { onNumberButtonClick("5") },
                 )
                 NumberButton(
                     text = "6",
-                    displayText = displayText,
+                    onClick = { onNumberButtonClick("6") },
                 )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.multiplication_sign),
-                    displayText = displayText,
                 )
             }
 
             NumpadRow {
                 NumberButton(
                     text = "1",
-                    displayText = displayText,
+                    onClick = { onNumberButtonClick("1") },
                 )
                 NumberButton(
                     text = "2",
-                    displayText = displayText,
+                    onClick = { onNumberButtonClick("2") },
                 )
                 NumberButton(
                     text = "3",
-                    displayText = displayText,
+                    onClick = { onNumberButtonClick("3") },
                 )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.minus_sign),
-                    displayText = displayText,
                 )
             }
 
             NumpadRow {
                 NumberButton(
                     text = "0",
-                    displayText = displayText,
+                    onClick = { onNumberButtonClick("0") },
                 )
                 NumberButton(
                     text = ".",
-                    displayText = displayText,
+                    onClick = { onNumberButtonClick(".") },
                 )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.plus_sign),
-                    displayText = displayText,
                 )
                 EqualsButton(
                     icon = ImageVector.vectorResource(R.drawable.equals_sign),
-                    displayText = displayText,
                 )
             }
         }
@@ -172,13 +167,11 @@ private fun NumpadRow(
 
 @Composable
 private fun EraseButton(
-    displayText: MutableState<String>,
+    onEraseButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     IconButton(
-        onClick = {
-            displayText.value = displayText.value.dropLast(1)
-        },
+        onClick = onEraseButtonClick,
         modifier = modifier,
     ) {
         Icon(
@@ -193,11 +186,10 @@ private fun EraseButton(
 @Composable
 private fun EqualsButton(
     icon: ImageVector,
-    displayText: MutableState<String>,
     modifier: Modifier = Modifier,
 ) {
     InputButton(
-        displayText = displayText,
+        onClick = { },
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -214,11 +206,10 @@ private fun EqualsButton(
 @Composable
 private fun OperatorButton(
     imageVector: ImageVector,
-    displayText: MutableState<String>,
     modifier: Modifier = Modifier,
 ) {
     InputButton(
-        displayText = displayText,
+        onClick = { },
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = DefaultInputButtonContainerColor,
@@ -235,11 +226,11 @@ private fun OperatorButton(
 @Composable
 private fun NumberButton(
     text: String,
-    displayText: MutableState<String>,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     InputButton(
-        displayText = displayText,
+        onClick = onClick,
         modifier = modifier,
     ) {
         Text(text)
@@ -248,19 +239,17 @@ private fun NumberButton(
 
 @Composable
 private fun InputButton(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = DefaultInputButtonContainerColor,
         contentColor = MaterialTheme.colorScheme.onSecondary,
     ),
-    displayText: MutableState<String>,
     content: @Composable () -> Unit,
 ) {
     val maxSize = 64.dp
     Button(
-        onClick = {
-            displayText.value += "a"
-        },
+        onClick = onClick,
         modifier = modifier
             .sizeIn(
                 maxWidth = maxSize,
@@ -284,6 +273,11 @@ private val DefaultInputButtonContainerColor: Color
 )
 private fun CalculatorPreview() {
     CalculatorTheme {
-        Calculator()
+        Calculator(
+            displayText = "43",
+            onEraseButtonClick = {},
+            onNumberButtonClick = {},
+            onOperatorButtonClick = {},
+        )
     }
 }
