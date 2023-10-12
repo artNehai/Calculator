@@ -11,16 +11,18 @@ import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun Application(
     displayText: String,
-    onNumberButtonClick: (String) -> Unit,
     onEraseButtonClick: () -> Unit,
-    onOperatorButtonClick: (String) -> Unit,
+    onNumberButtonClick: (String) -> Unit,
+    onOperatorButtonClick: (Operator) -> Unit,
+    onEqualsButtonClick: () -> Unit,
 ) {
     Scaffold { paddingValues ->
         Calculator(
             displayText = displayText,
-            onNumberButtonClick = onNumberButtonClick,
             onEraseButtonClick = onEraseButtonClick,
+            onNumberButtonClick = onNumberButtonClick,
             onOperatorButtonClick = onOperatorButtonClick,
+            onEqualsButtonClick = onEqualsButtonClick,
             modifier = Modifier
                 .padding(paddingValues),
         )
@@ -36,6 +38,7 @@ private fun CalculatorThemePreview() {
             onEraseButtonClick = {},
             onNumberButtonClick = {},
             onOperatorButtonClick = {},
+            onEqualsButtonClick = {},
         )
     }
 }

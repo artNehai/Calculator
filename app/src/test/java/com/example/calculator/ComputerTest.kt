@@ -9,12 +9,16 @@ class ComputerTest {
     fun `test add`() {
         // Given: initial preparations
         val computer = Computer()
-        val five = 5
+        val nextOperator = Operator.Subtract
+        val five = 5.0
 
         // When: execution
-        computer.add(five)
+        computer.addOperation(
+            operator = nextOperator,
+            number = five
+        )
 
         // Then: assertion
-        computer.calculationResult shouldBe five
+        computer.result shouldBe five
     }
 }

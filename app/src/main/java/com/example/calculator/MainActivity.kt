@@ -18,16 +18,27 @@ class MainActivity : ComponentActivity() {
             CalculatorTheme {
                 Application(
                     displayText = displayText,
-                    onNumberButtonClick = { input ->
-                        inputReceiver.append(input)
-                        displayText = inputReceiver.result
-                    },
                     onEraseButtonClick = {
                         inputReceiver.pop()
-                        displayText = inputReceiver.result
+                        displayText = inputReceiver.accumulatedString
                     },
-                    onOperatorButtonClick = {
-
+                    onNumberButtonClick = { input ->
+                        inputReceiver.append(input)
+                        displayText += inputReceiver.accumulatedString
+                    },
+                    onOperatorButtonClick = { operator ->
+                        computer.addOperation(
+                            operator = operator,
+                            number = inputReceiver.getNumber(),
+                        )
+                        displayText += operator
+                    },
+                    onEqualsButtonClick = {
+                        computer.addOperation(
+                            operator = null,
+                            number = inputReceiver.getNumber(),
+                        )
+                        displayText += "=${computer.result}"
                     },
                 )
             }

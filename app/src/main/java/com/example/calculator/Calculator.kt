@@ -29,13 +29,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.calculator.Operator.*
 
 @Composable
 fun Calculator(
     displayText: String,
     onEraseButtonClick: () -> Unit,
     onNumberButtonClick: (String) -> Unit,
-    onOperatorButtonClick: (String) -> Unit,
+    onOperatorButtonClick: (Operator) -> Unit,
+    onEqualsButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -79,6 +81,7 @@ fun Calculator(
                 )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.division_sign),
+                    onClick = { onOperatorButtonClick(Divide) },
                 )
             }
 
@@ -97,6 +100,7 @@ fun Calculator(
                 )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.multiplication_sign),
+                    onClick = { onOperatorButtonClick(Multiply) },
                 )
             }
 
@@ -115,6 +119,7 @@ fun Calculator(
                 )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.minus_sign),
+                    onClick = { onOperatorButtonClick(Subtract) },
                 )
             }
 
@@ -129,9 +134,11 @@ fun Calculator(
                 )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.plus_sign),
+                    onClick = { onOperatorButtonClick(Add) },
                 )
                 EqualsButton(
                     icon = ImageVector.vectorResource(R.drawable.equals_sign),
+                    onClick = onEqualsButtonClick,
                 )
             }
         }
@@ -186,10 +193,11 @@ private fun EraseButton(
 @Composable
 private fun EqualsButton(
     icon: ImageVector,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     InputButton(
-        onClick = { },
+        onClick = onClick,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -206,10 +214,11 @@ private fun EqualsButton(
 @Composable
 private fun OperatorButton(
     imageVector: ImageVector,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     InputButton(
-        onClick = { },
+        onClick = onClick,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             containerColor = DefaultInputButtonContainerColor,
@@ -278,6 +287,7 @@ private fun CalculatorPreview() {
             onEraseButtonClick = {},
             onNumberButtonClick = {},
             onOperatorButtonClick = {},
+            onEqualsButtonClick = {},
         )
     }
 }

@@ -14,18 +14,18 @@ class InputReceiverTest {
         inputReceiver.append(five)
         inputReceiver.append(six)
 
-        inputReceiver.number shouldBe 56
+        inputReceiver.getNumber() shouldBe 56.0
     }
 
     @Test
     fun `test appending with 23 then 1`() {
         val inputReceiver = InputReceiver()
-        val five = "23"
+        val seven = "7"
         val six = "1"
 
-        inputReceiver.append(five)
+        inputReceiver.append(seven)
         inputReceiver.append(six)
 
-        inputReceiver.number shouldBe 56
+        inputReceiver.getNumber() shouldBe 71.0
     }
 }

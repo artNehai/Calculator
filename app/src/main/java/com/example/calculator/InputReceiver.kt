@@ -2,17 +2,20 @@ package com.example.calculator
 
 // TODO: Change to better name
 class InputReceiver {
-    var result = ""
+    var accumulatedString = ""
         private set
 
-    val number
-        get() = result.toDouble()
+    fun getNumber(): Double {
+        val number = accumulatedString.toDouble()
+        accumulatedString = ""
+        return number
+    }
 
     fun append(digit: String) {
-        result += digit
+        accumulatedString += digit
     }
 
     fun pop() {
-        result = result.dropLast(1)
+        accumulatedString = accumulatedString.dropLast(1)
     }
 }
