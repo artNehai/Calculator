@@ -1,7 +1,7 @@
 package com.example.calculator
 
-// TODO: Change to better name
-class InputReceiver {
+class InputStack {
+
     var accumulatedString = ""
         private set
 

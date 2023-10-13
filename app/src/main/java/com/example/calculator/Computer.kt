@@ -9,36 +9,41 @@ class Computer {
     var result = 0.0
         private set
 
-    private val history = mutableListOf<HistoryEntry>()
+    private val history = mutableListOf<Operation>()
     private var lastOperator = Add
 
     fun addOperation(
         operator: Operator?,
         number: Double,
     ) {
-        history += HistoryEntry(lastOperator, number)
+        history += Operation(lastOperator, number)
         calculateResult()
         lastOperator = operator ?: Add
     }
 
     private fun calculateResult() {
         val reducedHistory = history.toMutableList()
-        for (i in history.indices) {
-            if (history[i].operator in listOf(Divide, Multiply)) {
-                val mergedEntry = history[i - 1] mergeWith history[i]
-                reducedHistory[i - 1] = mergedEntry
-                reducedHistory.removeAt(i)
-            }
+        reducedHistory.mergeOnly { operator ->
+            operator in listOf(Divide, Multiply)
         }
-        for (i in 1..history.lastIndex) {
-            val mergedEntry = history[i - 1] mergeWith history[i]
-            reducedHistory[i - 1] = mergedEntry
-            reducedHistory.removeAt(i)
+        reducedHistory.mergeOnly { operator ->
+            operator in listOf(Subtract, Add)
         }
         result = reducedHistory.first().number
     }
 
-    private infix fun HistoryEntry.mergeWith(other: HistoryEntry): HistoryEntry {
+    private fun MutableList<Operation>.mergeOnly(
+        condition: (Operator) -> Boolean,
+    ) {
+        for (i in 1..lastIndex) {
+            if (!condition(this[i].operator)) continue
+            val mergedEntry = this[i - 1] mergeWith this[i]
+            this[i - 1] = mergedEntry
+            removeAt(i)
+        }
+    }
+
+    private infix fun Operation.mergeWith(other: Operation): Operation {
         val a = this.number
         val b = other.number
         val result = when (other.operator) {
@@ -47,13 +52,13 @@ class Computer {
             Subtract -> a - b
             Add -> a + b
         }
-        return HistoryEntry(
+        return Operation(
             operator = this.operator,
             number = result,
         )
     }
 
-    private data class HistoryEntry(
+    private data class Operation(
         val operator: Operator,
         val number: Double,
     )

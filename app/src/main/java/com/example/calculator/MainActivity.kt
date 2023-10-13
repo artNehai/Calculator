@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
-    private val inputReceiver = InputReceiver()
+    private val stack = InputStack()
     private val computer = Computer()
     private var displayText by mutableStateOf("")
 
@@ -19,24 +19,24 @@ class MainActivity : ComponentActivity() {
                 Application(
                     displayText = displayText,
                     onEraseButtonClick = {
-                        inputReceiver.pop()
-                        displayText = inputReceiver.accumulatedString
+                        stack.pop()
+                        displayText = stack.accumulatedString
                     },
                     onNumberButtonClick = { input ->
-                        inputReceiver.append(input)
-                        displayText += inputReceiver.accumulatedString
+                        stack.append(input)
+                        displayText += stack.accumulatedString
                     },
                     onOperatorButtonClick = { operator ->
                         computer.addOperation(
                             operator = operator,
-                            number = inputReceiver.getNumber(),
+                            number = stack.getNumber(),
                         )
-                        displayText += operator
+                        displayText += operator.sign()
                     },
                     onEqualsButtonClick = {
                         computer.addOperation(
                             operator = null,
-                            number = inputReceiver.getNumber(),
+                            number = stack.getNumber(),
                         )
                         displayText += "=${computer.result}"
                     },

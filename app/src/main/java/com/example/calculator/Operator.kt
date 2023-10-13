@@ -1,13 +1,21 @@
 package com.example.calculator
 
-enum class Operator(
-    private val sign: String,
-) {
-    Divide("÷"),
-    Multiply("×"),
-    Subtract("-"),
-    Add("+"),
-    ;
+import com.example.calculator.Operator.Add
+import com.example.calculator.Operator.Divide
+import com.example.calculator.Operator.Multiply
+import com.example.calculator.Operator.Subtract
 
-    override fun toString() = sign
+enum class Operator {
+    Divide,
+    Multiply,
+    Subtract,
+    Add,
 }
+
+fun Operator.sign(): String =
+    when (this) {
+        Divide -> "÷"
+        Multiply -> "×"
+        Subtract -> "-"
+        Add -> "+"
+    }
