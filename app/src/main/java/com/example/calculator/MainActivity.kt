@@ -19,12 +19,17 @@ class MainActivity : ComponentActivity() {
                 Application(
                     displayText = displayText,
                     onEraseButtonClick = {
-                        stack.pop()
-                        displayText = stack.accumulatedString
+                        if (stack.accumulatedString.isNotEmpty()) {
+                            stack.pop()
+                        } else {
+                            val number = computer.removeLastOperation()
+                            stack.append(number.toString())
+                        }
+                        displayText = displayText.dropLast(1)
                     },
                     onNumberButtonClick = { input ->
                         stack.append(input)
-                        displayText += stack.accumulatedString
+                        displayText += input
                     },
                     onOperatorButtonClick = { operator ->
                         computer.addOperation(

@@ -21,6 +21,14 @@ class Computer {
         lastOperator = operator ?: Add
     }
 
+    fun removeLastOperation(): Double {
+        val number = history.last().number
+        lastOperator = history.last().operator
+        history.removeLast()
+        calculateResult()
+        return number
+    }
+
     private fun calculateResult() {
         val reducedHistory = history.toMutableList()
         reducedHistory.mergeOnly { operator ->

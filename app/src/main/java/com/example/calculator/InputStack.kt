@@ -11,8 +11,8 @@ class InputStack {
         return number
     }
 
-    fun append(digit: String) {
-        accumulatedString += digit
+    fun append(input: String) {
+        accumulatedString += input
     }
 
     fun pop() {
