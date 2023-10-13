@@ -6,11 +6,9 @@ import com.example.calculator.Operator.Multiply
 import com.example.calculator.Operator.Subtract
 
 class Computer {
-    var result = 0.0
-        private set
-
-    private val history = mutableListOf<Operation>()
+    private var result = 0.0
     private var lastOperator = Add
+    private val history = mutableListOf<Operation>()
 
     fun addOperation(
         operator: Operator?,
@@ -27,6 +25,13 @@ class Computer {
         history.removeLast()
         calculateResult()
         return number
+    }
+
+    fun getResult(): Double {
+        val buffer = result
+        result = 0.0
+        history.clear()
+        return buffer
     }
 
     private fun calculateResult() {

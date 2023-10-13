@@ -19,6 +19,6 @@ class ComputerTest {
         )
 
         // Then: assertion
-        computer.result shouldBe five
+        computer.getResult() shouldBe five
     }
 }

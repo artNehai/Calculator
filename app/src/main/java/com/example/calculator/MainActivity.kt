@@ -11,6 +11,7 @@ class MainActivity : ComponentActivity() {
     private val stack = InputStack()
     private val computer = Computer()
     private var displayText by mutableStateOf("")
+    private var isEqualsClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,10 @@ class MainActivity : ComponentActivity() {
                     },
                     onNumberButtonClick = { input ->
                         stack.append(input)
+                        if (isEqualsClicked) {
+                            displayText = ""
+                            isEqualsClicked = false
+                        }
                         displayText += input
                     },
                     onOperatorButtonClick = { operator ->
@@ -43,7 +48,8 @@ class MainActivity : ComponentActivity() {
                             operator = null,
                             number = stack.getNumber(),
                         )
-                        displayText += "=${computer.result}"
+                        displayText += "=${computer.getResult()}"
+                        isEqualsClicked = true
                     },
                 )
             }
