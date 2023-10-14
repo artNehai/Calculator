@@ -38,15 +38,15 @@ class MainActivity : ComponentActivity() {
                     },
                     onOperatorButtonClick = { operator ->
                         computer.addOperation(
-                            operator = operator,
                             number = stack.getNumber(),
+                            operator = operator,
                         )
                         displayText += operator.sign()
                     },
                     onEqualsButtonClick = {
                         computer.addOperation(
-                            operator = null,
                             number = stack.getNumber(),
+                            operator = null,
                         )
                         displayText += "=${computer.getResult()}"
                         isEqualsClicked = true
