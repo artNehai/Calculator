@@ -3,7 +3,7 @@ package com.example.calculator
 import io.kotest.matchers.shouldBe
 import org.junit.Test
 
-class InputStackTest {
+class InputStackTests {
 
     @Test
     fun `test appending with 5 then 6`() {

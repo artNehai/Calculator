@@ -48,11 +48,15 @@ class Computer {
     private fun MutableList<Operation>.mergeOnly(
         condition: (Operator) -> Boolean,
     ) {
-        for (i in 1..lastIndex) {
-            if (!condition(this[i].operator)) continue
-            val mergedEntry = this[i - 1] mergeWith this[i]
-            this[i - 1] = mergedEntry
-            removeAt(i)
+        var i = 1
+        while (i <= lastIndex) {
+            if (condition(this[i].operator)) {
+                val mergedEntry = this[i - 1] mergeWith this[i]
+                this[i] = mergedEntry
+                removeAt(i - 1)
+                i--
+            }
+            i++
         }
     }
 

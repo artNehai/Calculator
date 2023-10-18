@@ -118,7 +118,7 @@ fun Calculator(
                     onClick = { onNumberButtonClick("3") },
                 )
                 OperatorButton(
-                    imageVector = ImageVector.vectorResource(R.drawable.minus_sign),
+                    imageVector = ImageVector.vectorResource(R.drawable.subtraction_sign),
                     onClick = { onOperatorButtonClick(Subtract) },
                 )
             }
@@ -133,11 +133,11 @@ fun Calculator(
                     onClick = { onNumberButtonClick(".") },
                 )
                 OperatorButton(
-                    imageVector = ImageVector.vectorResource(R.drawable.plus_sign),
+                    imageVector = ImageVector.vectorResource(R.drawable.addition_sign),
                     onClick = { onOperatorButtonClick(Add) },
                 )
                 EqualsButton(
-                    icon = ImageVector.vectorResource(R.drawable.equals_sign),
+                    icon = ImageVector.vectorResource(R.drawable.equality_sign),
                     onClick = onEqualsButtonClick,
                 )
             }

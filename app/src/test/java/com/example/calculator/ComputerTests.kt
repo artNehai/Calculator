@@ -1,10 +1,12 @@
 package com.example.calculator
 
-import com.example.calculator.Operator.*
+import com.example.calculator.Operator.Add
+import com.example.calculator.Operator.Multiply
+import com.example.calculator.Operator.Subtract
 import io.kotest.matchers.shouldBe
 import org.junit.Test
 
-class ComputerTest {
+class ComputerTests {
 
     private val _computer = Computer()
 
@@ -37,6 +39,7 @@ class ComputerTest {
     @Test
     fun `test adding chain of 3 simple operations`() {
         val computer = Computer()
+
         val minusSix = -6.0
         val twelve = 12.0
         val ten = 10.0
