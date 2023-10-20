@@ -19,12 +19,10 @@ class Computer {
         lastOperator = operator ?: Add
     }
 
-    fun removeLastOperation(): Double {
-        val number = history.last().number
-        lastOperator = history.last().operator
-        history.removeLast()
+    fun removeLastOperation() {
+        val removedOperation = history.removeLast()
+        lastOperator = removedOperation.operator
         calculateResult()
-        return number
     }
 
     fun getResult(): Double {
@@ -42,7 +40,7 @@ class Computer {
         reducedHistory.mergeOnly { operator ->
             operator in listOf(Subtract, Add)
         }
-        result = reducedHistory.first().number
+        result = reducedHistory.firstOrNull()?.number ?: 0.0
     }
 
     private fun MutableList<Operation>.mergeOnly(

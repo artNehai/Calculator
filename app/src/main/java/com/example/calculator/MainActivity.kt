@@ -23,29 +23,30 @@ class MainActivity : ComponentActivity() {
                         if (stack.accumulatedString.isNotEmpty()) {
                             stack.pop()
                         } else {
-                            val number = computer.removeLastOperation()
-                            stack.append(number.toString())
+                            computer.removeLastOperation()
+                            stack.append(stack.getLastInput())
                         }
                         displayText = displayText.dropLast(1)
                     },
                     onNumberButtonClick = { input ->
-                        stack.append(input)
                         if (isEqualsClicked) {
                             displayText = ""
+                            stack.resetHistory()
                             isEqualsClicked = false
                         }
+                        stack.append(input)
                         displayText += input
                     },
                     onOperatorButtonClick = { operator ->
                         computer.addOperation(
-                            number = stack.getNumber(),
+                            number = stack.getAccumulatedNumber(),
                             operator = operator,
                         )
                         displayText += operator.sign()
                     },
                     onEqualsButtonClick = {
                         computer.addOperation(
-                            number = stack.getNumber(),
+                            number = stack.getAccumulatedNumber(),
                             operator = null,
                         )
                         displayText += "=${computer.getResult()}"

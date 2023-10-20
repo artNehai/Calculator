@@ -29,7 +29,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.calculator.Operator.*
+import com.example.calculator.Operator.Add
+import com.example.calculator.Operator.Divide
+import com.example.calculator.Operator.Multiply
+import com.example.calculator.Operator.Subtract
 
 @Composable
 fun Calculator(

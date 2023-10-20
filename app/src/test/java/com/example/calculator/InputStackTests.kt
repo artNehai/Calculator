@@ -14,7 +14,7 @@ class InputStackTests {
         input.append(five)
         input.append(six)
 
-        input.getNumber() shouldBe 56.0
+        input.getAccumulatedNumber() shouldBe 56.0
     }
 
     @Test
@@ -26,6 +26,6 @@ class InputStackTests {
         input.append(seven)
         input.append(six)
 
-        input.getNumber() shouldBe 71.0
+        input.getAccumulatedNumber() shouldBe 71.0
     }
 }
