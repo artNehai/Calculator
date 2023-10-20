@@ -104,4 +104,43 @@ class ComputerTests {
 
         computer.getResult() shouldBe result
     }
+
+    @Test
+    fun `test that getResult() method resets result to 0`() {
+        val computer = Computer()
+
+        val twentyOne = 21.0
+        val operator1 = Subtract
+        val seven = 7.0
+        val result1 = 14.0
+
+        val thirteen = 13.0
+        val operator2 = Divide
+        val two = 2.0
+        val result2 = 6.5
+
+        computer.addOperation(
+            number = twentyOne,
+            operator = operator1,
+        )
+
+        computer.addOperation(
+            number = seven,
+            operator = null,
+        )
+
+        computer.getResult() shouldBe result1
+
+        computer.addOperation(
+            number = thirteen,
+            operator = operator2,
+        )
+
+        computer.addOperation(
+            number = two,
+            operator = null,
+        )
+
+        computer.getResult() shouldBe result2
+    }
 }
