@@ -1,6 +1,7 @@
 package com.example.calculator
 
 import com.example.calculator.Operator.Add
+import com.example.calculator.Operator.Divide
 import com.example.calculator.Operator.Multiply
 import com.example.calculator.Operator.Subtract
 import io.kotest.matchers.shouldBe
@@ -8,36 +9,38 @@ import org.junit.Test
 
 class ComputerTests {
 
-    private val _computer = Computer()
-
     @Test
     fun `test adding operation with positive integer`() {
+        val computer = Computer()
+
         val fifteen = 15.0
         val operator = Subtract
 
-        _computer.addOperation(
+        computer.addOperation(
             number = fifteen,
             operator = operator,
         )
 
-        _computer.getResult() shouldBe fifteen
+        computer.getResult() shouldBe fifteen
     }
 
     @Test
     fun `test adding operation with negative integer`() {
+        val computer = Computer()
+
         val minusTwo = -2.0
         val operator = Multiply
 
-        _computer.addOperation(
+        computer.addOperation(
             number = minusTwo,
             operator = operator,
         )
 
-        _computer.getResult() shouldBe minusTwo
+        computer.getResult() shouldBe minusTwo
     }
 
     @Test
-    fun `test adding chain of 3 simple operations`() {
+    fun `test adding chain of 3 additive operations`() {
         val computer = Computer()
 
         val minusSix = -6.0
@@ -61,6 +64,42 @@ class ComputerTests {
         computer.addOperation(
             number = ten,
             operator = operator3,
+        )
+
+        computer.getResult() shouldBe result
+    }
+
+    @Test
+    fun `test adding chain of 4 operations of various precedence`() {
+        val computer = Computer()
+
+        val four = 4.0
+        val eleven = 11.0
+        val hundredEleven = 111.0
+        val three = 3.0
+        val operator1 = Multiply
+        val operator2 = Subtract
+        val operator3 = Divide
+        val result = 7.0
+
+        computer.addOperation(
+            number = four,
+            operator = operator1,
+        )
+
+        computer.addOperation(
+            number = eleven,
+            operator = operator2,
+        )
+
+        computer.addOperation(
+            number = hundredEleven,
+            operator = operator3,
+        )
+
+        computer.addOperation(
+            number = three,
+            operator = null,
         )
 
         computer.getResult() shouldBe result
