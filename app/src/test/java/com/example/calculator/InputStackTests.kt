@@ -6,26 +6,53 @@ import org.junit.Test
 class InputStackTests {
 
     @Test
-    fun `test appending with 5 then 6`() {
+    fun `test appending a prime number`() {
         val input = InputStack()
-        val five = "5"
-        val six = "6"
 
-        input.append(five)
-        input.append(six)
+        val twentyThree = "23"
 
-        input.getAccumulatedNumber() shouldBe 56.0
+        input.append(twentyThree)
+
+        input.accumulatedString shouldBe twentyThree
     }
 
     @Test
-    fun `test appending with 23 then 1`() {
+    fun `test appending a decimal number`() {
         val input = InputStack()
+
+        val thirtyTwoPointOne = "32.1"
+
+        input.append(thirtyTwoPointOne)
+
+        input.accumulatedString shouldBe thirtyTwoPointOne
+    }
+
+    @Test
+    fun `test appending two consecutive inputs`() {
+        val input = InputStack()
+
+        val five = "5"
+        val eleven = "11"
+        val result = "511"
+
+        input.append(five)
+        input.append(eleven)
+
+        input.accumulatedString shouldBe result
+    }
+
+    @Test
+    fun `test popping last symbol`() {
+        val input = InputStack()
+
         val seven = "7"
-        val six = "1"
+        val three = "3"
+        val result = "7"
 
         input.append(seven)
-        input.append(six)
+        input.append(three)
+        input.pop()
 
-        input.getAccumulatedNumber() shouldBe 71.0
+        input.accumulatedString shouldBe result
     }
 }
