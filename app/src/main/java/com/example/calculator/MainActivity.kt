@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                             stack.pop()
                         } else {
                             computer.removeLastOperation()
-                            stack.append(stack.getLastInput())
+                            stack.revertToPreviousInput()
                         }
                         displayText = displayText.dropLast(1)
                     },

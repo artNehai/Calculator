@@ -15,10 +15,9 @@ class InputStack {
         accumulatedString = accumulatedString.dropLast(1)
     }
 
-    fun getLastInput(): String {
-        val lastInput = history.last()
+    fun revertToPreviousInput() {
+        accumulatedString = history.last()
         history.removeLast()
-        return lastInput
     }
 
     fun getAccumulatedNumber(): Double {
