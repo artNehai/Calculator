@@ -106,6 +106,32 @@ class ComputerTests {
     }
 
     @Test
+    fun `test removing last operation`() {
+        val computer = Computer()
+
+        val thirtyNine = 39.0
+        val three = 3.0
+        val operator1 = Divide
+        val operator2 = Add
+        val result = 39.0
+
+
+        computer.addOperation(
+            number = thirtyNine,
+            operator = operator1,
+        )
+
+        computer.addOperation(
+            number = three,
+            operator = operator2,
+        )
+
+        computer.removeLastOperation()
+
+        computer.getResult() shouldBe result
+    }
+
+    @Test
     fun `test that getResult() method resets result to 0`() {
         val computer = Computer()
 
