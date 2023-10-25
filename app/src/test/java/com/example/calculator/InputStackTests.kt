@@ -55,4 +55,27 @@ class InputStackTests {
 
         input.accumulatedString shouldBe result
     }
+
+    @Test
+    fun `test getting last input`() {
+        val input = InputStack()
+
+        val nine = "9"
+        val fifteen = "15"
+        val six = "6"
+
+        input.append(nine)
+        input.getAccumulatedNumber()
+
+        input.append(fifteen)
+        input.getAccumulatedNumber()
+
+        input.append(six)
+
+        input.revertToPreviousInput()
+        input.accumulatedString shouldBe fifteen
+
+        input.revertToPreviousInput()
+        input.accumulatedString shouldBe nine
+    }
 }
