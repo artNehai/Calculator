@@ -1,5 +1,6 @@
 package com.example.calculator
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.Test
 
@@ -77,5 +78,25 @@ class InputStackTests {
 
         input.revertToPreviousInput()
         input.accumulatedString shouldBe nine
+    }
+
+    @Test
+    fun `test resetting input history`() {
+        val input = InputStack()
+
+        val two = "2"
+        val eight = "8"
+
+        input.append(two)
+        input.getAccumulatedNumber()
+
+        input.append(eight)
+        input.getAccumulatedNumber()
+
+        input.resetHistory()
+
+        shouldThrow<NoSuchElementException> {
+            input.revertToPreviousInput()
+        }
     }
 }
