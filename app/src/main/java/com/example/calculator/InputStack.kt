@@ -2,9 +2,10 @@ package com.example.calculator
 
 class InputStack {
 
-    private val history = mutableListOf("0")
+    private val zeroPrefix = "0"
+    private val history = mutableListOf(zeroPrefix)
 
-    var accumulatedString = ""
+    var accumulatedString = zeroPrefix
         private set
 
     fun append(input: String) {
@@ -12,7 +13,9 @@ class InputStack {
     }
 
     fun pop() {
-        accumulatedString = accumulatedString.dropLast(1)
+        if (accumulatedString.length > 1) {
+            accumulatedString = accumulatedString.dropLast(1)
+        }
     }
 
     fun revertToPreviousInput() {
@@ -25,9 +28,11 @@ class InputStack {
     fun getAccumulatedNumber(): Double {
         val number = accumulatedString.toDouble()
         history.add(accumulatedString)
-        accumulatedString = ""
+        accumulatedString = zeroPrefix
         return number
     }
 
     fun resetHistory() = history.clear()
+
+    fun isNotEmpty() = accumulatedString.length > 1
 }

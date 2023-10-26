@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                 Application(
                     displayText = displayText,
                     onEraseButtonClick = {
-                        if (stack.accumulatedString.isNotEmpty()) {
+                        if (stack.isNotEmpty()) {
                             stack.pop()
                         } else {
                             computer.removeLastOperation()
