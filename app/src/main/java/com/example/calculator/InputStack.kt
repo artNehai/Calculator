@@ -2,7 +2,7 @@ package com.example.calculator
 
 class InputStack {
 
-    private val history = mutableListOf<String>()
+    private val history = mutableListOf("0")
 
     var accumulatedString = ""
         private set
@@ -17,7 +17,9 @@ class InputStack {
 
     fun revertToPreviousInput() {
         accumulatedString = history.last()
-        history.removeLast()
+        if (history.size > 1) {
+            history.removeLast()
+        }
     }
 
     fun getAccumulatedNumber(): Double {

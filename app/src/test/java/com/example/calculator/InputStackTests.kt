@@ -58,7 +58,7 @@ class InputStackTests {
     }
 
     @Test
-    fun `test getting last input`() {
+    fun `test reverting last input`() {
         val input = InputStack()
 
         val nine = "9"
