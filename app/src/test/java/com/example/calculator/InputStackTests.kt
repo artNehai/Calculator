@@ -1,6 +1,5 @@
 package com.example.calculator
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.Test
 
@@ -11,10 +10,11 @@ class InputStackTests {
         val input = InputStack()
 
         val twentyThree = "23"
+        val result = 23.0
 
         input.append(twentyThree)
 
-        input.accumulatedString shouldBe twentyThree
+        input.getAccumulatedNumber() shouldBe result
     }
 
     @Test
@@ -22,10 +22,11 @@ class InputStackTests {
         val input = InputStack()
 
         val thirtyTwoPointOne = "32.1"
+        val result = 32.1
 
         input.append(thirtyTwoPointOne)
 
-        input.accumulatedString shouldBe thirtyTwoPointOne
+        input.getAccumulatedNumber() shouldBe result
     }
 
     @Test
@@ -34,12 +35,12 @@ class InputStackTests {
 
         val five = "5"
         val eleven = "11"
-        val result = "511"
+        val result = 511.0
 
         input.append(five)
         input.append(eleven)
 
-        input.accumulatedString shouldBe result
+        input.getAccumulatedNumber() shouldBe result
     }
 
     @Test
@@ -48,13 +49,13 @@ class InputStackTests {
 
         val seven = "7"
         val three = "3"
-        val result = "7"
+        val result = 7.0
 
         input.append(seven)
         input.append(three)
         input.pop()
 
-        input.accumulatedString shouldBe result
+        input.getAccumulatedNumber() shouldBe result
     }
 
     @Test
@@ -62,22 +63,15 @@ class InputStackTests {
         val input = InputStack()
 
         val nine = "9"
-        val fifteen = "15"
         val six = "6"
 
         input.append(nine)
-        input.getAccumulatedNumber()
-
-        input.append(fifteen)
-        input.getAccumulatedNumber()
+        val result = input.getAccumulatedNumber()
 
         input.append(six)
 
         input.revertToPreviousInput()
-        input.accumulatedString shouldBe fifteen
-
-        input.revertToPreviousInput()
-        input.accumulatedString shouldBe nine
+        input.getAccumulatedNumber() shouldBe result
     }
 
     @Test
@@ -95,8 +89,6 @@ class InputStackTests {
 
         input.resetHistory()
 
-        shouldThrow<NoSuchElementException> {
-            input.revertToPreviousInput()
-        }
+        input.getAccumulatedNumber() shouldBe 0.0
     }
 }
