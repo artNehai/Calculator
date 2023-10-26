@@ -13,6 +13,7 @@ fun Application(
     displayText: String,
     onEraseButtonClick: () -> Unit,
     onNumberButtonClick: (String) -> Unit,
+    onDecimalSeparatorClick: (String) -> Unit,
     onOperatorButtonClick: (Operator) -> Unit,
     onEqualsButtonClick: () -> Unit,
 ) {
@@ -21,6 +22,7 @@ fun Application(
             displayText = displayText,
             onEraseButtonClick = onEraseButtonClick,
             onNumberButtonClick = onNumberButtonClick,
+            onDecimalSeparatorClick = onDecimalSeparatorClick,
             onOperatorButtonClick = onOperatorButtonClick,
             onEqualsButtonClick = onEqualsButtonClick,
             modifier = Modifier
@@ -37,6 +39,7 @@ private fun CalculatorThemePreview() {
             displayText = "43",
             onEraseButtonClick = {},
             onNumberButtonClick = {},
+            onDecimalSeparatorClick = {},
             onOperatorButtonClick = {},
             onEqualsButtonClick = {},
         )

@@ -12,6 +12,7 @@ class MainActivity : ComponentActivity() {
     private val computer = Computer()
     private var displayText by mutableStateOf("")
     private var isEqualsClicked = false
+    private var isDecimalSeparatorClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +38,20 @@ class MainActivity : ComponentActivity() {
                         stack.append(input)
                         displayText += input
                     },
+                    onDecimalSeparatorClick = { separator ->
+                        if (!isDecimalSeparatorClicked) {
+                            stack.append(separator)
+                            displayText += separator
+                            isDecimalSeparatorClicked = true
+                        }
+                    },
                     onOperatorButtonClick = { operator ->
                         computer.addOperation(
                             number = stack.getAccumulatedNumber(),
                             operator = operator,
                         )
                         displayText += operator.sign()
+                        isDecimalSeparatorClicked = false
                     },
                     onEqualsButtonClick = {
                         computer.addOperation(
@@ -51,6 +60,7 @@ class MainActivity : ComponentActivity() {
                         )
                         displayText += "=${computer.getResult()}"
                         isEqualsClicked = true
+                        isDecimalSeparatorClicked = false
                     },
                 )
             }

@@ -39,6 +39,7 @@ fun Calculator(
     displayText: String,
     onEraseButtonClick: () -> Unit,
     onNumberButtonClick: (String) -> Unit,
+    onDecimalSeparatorClick: (String) -> Unit,
     onOperatorButtonClick: (Operator) -> Unit,
     onEqualsButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -133,7 +134,7 @@ fun Calculator(
                 )
                 NumberButton(
                     text = ".",
-                    onClick = { onNumberButtonClick(".") },
+                    onClick = { onDecimalSeparatorClick(".") },
                 )
                 OperatorButton(
                     imageVector = ImageVector.vectorResource(R.drawable.addition_sign),
@@ -289,6 +290,7 @@ private fun CalculatorPreview() {
             displayText = "43",
             onEraseButtonClick = {},
             onNumberButtonClick = {},
+            onDecimalSeparatorClick = {},
             onOperatorButtonClick = {},
             onEqualsButtonClick = {},
         )
