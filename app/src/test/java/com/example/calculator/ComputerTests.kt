@@ -129,6 +129,10 @@ class ComputerTests {
         computer.removeLastOperation()
 
         computer.getResult() shouldBe result
+
+        computer.removeLastOperation()
+
+        computer.getResult() shouldBe 0.0
     }
 
     @Test
