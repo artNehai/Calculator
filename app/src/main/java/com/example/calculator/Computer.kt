@@ -20,6 +20,7 @@ class Computer {
     }
 
     fun removeLastOperation() {
+        if (history.isEmpty()) return
         val removedOperation = history.removeLast()
         lastOperator = removedOperation.operator
         calculateResult()
