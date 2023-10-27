@@ -46,10 +46,14 @@ class MainActivity : ComponentActivity() {
                         }
                     },
                     onOperatorButtonClick = { operator ->
+                        val number = stack.getAccumulatedNumber()
                         computer.addOperation(
-                            number = stack.getAccumulatedNumber(),
+                            number = number,
                             operator = operator,
                         )
+                        if (number == null) {
+                            displayText = displayText.dropLast(1)
+                        }
                         displayText += operator.sign()
                         isDecimalSeparatorClicked = false
                     },
@@ -59,8 +63,8 @@ class MainActivity : ComponentActivity() {
                             operator = null,
                         )
                         displayText += "=${computer.getResult()}"
-                        isEqualsClicked = true
                         isDecimalSeparatorClicked = false
+                        isEqualsClicked = true
                     },
                 )
             }

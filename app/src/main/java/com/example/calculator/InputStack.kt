@@ -19,13 +19,14 @@ class InputStack {
         history.removeLast()
     }
 
-    fun getAccumulatedNumber(): Double {
-        val number =
-            if (accumulatedString == ".") {
-                0.0
-            } else {
-                accumulatedString.toDouble()
-            }
+    fun getAccumulatedNumber(): Double? {
+        if (accumulatedString.isEmpty()) {
+            return null
+        }
+        val number = when (accumulatedString) {
+            "." -> 0.0
+            else -> accumulatedString.toDouble()
+        }
         history.add(accumulatedString)
         accumulatedString = ""
         return number

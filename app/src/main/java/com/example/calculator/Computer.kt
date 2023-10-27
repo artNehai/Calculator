@@ -11,11 +11,16 @@ class Computer {
     private val history = mutableListOf<Operation>()
 
     fun addOperation(
-        number: Double,
+        number: Double?,
         operator: Operator?,
     ) {
-        history += Operation(lastOperator, number)
-        calculateResult()
+        if (number == null && operator == null) {
+            return
+        }
+        if (number != null) {
+            history += Operation(lastOperator, number)
+            calculateResult()
+        }
         lastOperator = operator ?: Add
     }
 
