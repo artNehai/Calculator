@@ -89,6 +89,6 @@ class InputStackTests {
 
         input.resetHistory()
 
-        input.getAccumulatedNumber() shouldBe 0.0
+        input.getAccumulatedNumber() shouldBe null
     }
 }
