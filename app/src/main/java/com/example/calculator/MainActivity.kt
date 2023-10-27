@@ -20,19 +20,23 @@ class MainActivity : ComponentActivity() {
             CalculatorTheme {
                 Application(
                     displayText = displayText,
-                    onEraseButtonClick = {
-                        if (stack.isNotEmpty()) {
-                            stack.pop()
-                        } else {
-                            computer.removeLastOperation()
-                            stack.revertToPreviousInput()
+                    onEraseButtonClick = erase@{
+                        if (isEqualsClicked) {
+                            displayText = ""
+                            stack.reset()
+                            isEqualsClicked = false
+                            return@erase
                         }
+                        if (stack.isEmpty()) {
+                            computer.removeLastOperation()
+                        }
+                        stack.pop()
                         displayText = displayText.dropLast(1)
                     },
                     onNumberButtonClick = { input ->
                         if (isEqualsClicked) {
                             displayText = ""
-                            stack.resetHistory()
+                            stack.reset()
                             isEqualsClicked = false
                         }
                         stack.append(input)
@@ -46,7 +50,7 @@ class MainActivity : ComponentActivity() {
                         }
                     },
                     onOperatorButtonClick = { operator ->
-                        val number = stack.getAccumulatedNumber()
+                        val number = stack.getNumber()
                         computer.addOperation(
                             number = number,
                             operator = operator,
@@ -59,7 +63,7 @@ class MainActivity : ComponentActivity() {
                     },
                     onEqualsButtonClick = {
                         computer.addOperation(
-                            number = stack.getAccumulatedNumber(),
+                            number = stack.getNumber(),
                             operator = null,
                         )
                         displayText += "=${computer.getResult()}"

@@ -10,16 +10,22 @@ class InputStack {
     }
 
     fun pop() {
-        accumulatedString = accumulatedString.dropLast(1)
+        when {
+            accumulatedString.isEmpty() && history.isEmpty() -> return
+
+            accumulatedString.isEmpty() && history.isNotEmpty() -> {
+                accumulatedString = history.last()
+                history.removeLast()
+            }
+
+            else -> {
+                accumulatedString = accumulatedString.dropLast(1)
+            }
+        }
+
     }
 
-    fun revertToPreviousInput() {
-        if (history.isEmpty()) return
-        accumulatedString = history.last()
-        history.removeLast()
-    }
-
-    fun getAccumulatedNumber(): Double? {
+    fun getNumber(): Double? {
         if (accumulatedString.isEmpty()) {
             return null
         }
@@ -32,9 +38,10 @@ class InputStack {
         return number
     }
 
-    fun resetHistory() {
+    fun reset() {
         history.clear()
+        accumulatedString = ""
     }
 
-    fun isNotEmpty() = accumulatedString.length > 1
+    fun isEmpty() = accumulatedString.isEmpty()
 }

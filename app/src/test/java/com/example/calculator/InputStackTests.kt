@@ -14,7 +14,7 @@ class InputStackTests {
 
         input.append(twentyThree)
 
-        input.getAccumulatedNumber() shouldBe result
+        input.getNumber() shouldBe result
     }
 
     @Test
@@ -26,7 +26,7 @@ class InputStackTests {
 
         input.append(thirtyTwoPointOne)
 
-        input.getAccumulatedNumber() shouldBe result
+        input.getNumber() shouldBe result
     }
 
     @Test
@@ -40,7 +40,7 @@ class InputStackTests {
         input.append(five)
         input.append(eleven)
 
-        input.getAccumulatedNumber() shouldBe result
+        input.getNumber() shouldBe result
     }
 
     @Test
@@ -55,23 +55,12 @@ class InputStackTests {
         input.append(three)
         input.pop()
 
-        input.getAccumulatedNumber() shouldBe result
-    }
+        input.getNumber() shouldBe result
 
-    @Test
-    fun `test reverting last input`() {
-        val input = InputStack()
+        input.getNumber() shouldBe null
 
-        val nine = "9"
-        val six = "6"
-
-        input.append(nine)
-        val result = input.getAccumulatedNumber()
-
-        input.append(six)
-
-        input.revertToPreviousInput()
-        input.getAccumulatedNumber() shouldBe result
+        input.pop()
+        input.getNumber() shouldBe result
     }
 
     @Test
@@ -82,13 +71,13 @@ class InputStackTests {
         val eight = "8"
 
         input.append(two)
-        input.getAccumulatedNumber()
+        input.getNumber()
 
         input.append(eight)
-        input.getAccumulatedNumber()
+        input.getNumber()
 
-        input.resetHistory()
+        input.reset()
 
-        input.getAccumulatedNumber() shouldBe null
+        input.getNumber() shouldBe null
     }
 }
