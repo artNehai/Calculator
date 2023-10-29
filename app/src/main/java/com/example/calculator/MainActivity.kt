@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                             number = stack.getNumber(),
                             operator = null,
                         )
-                        displayText += "=${computer.getResult()}"
+                        displayText += "=${computer.result}"
                         isDecimalSeparatorClicked = false
                         isEqualsClicked = true
                     },

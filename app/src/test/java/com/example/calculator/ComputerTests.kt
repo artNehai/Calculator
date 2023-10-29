@@ -21,7 +21,7 @@ class ComputerTests {
             operator = operator,
         )
 
-        computer.getResult() shouldBe fifteen
+        computer.result shouldBe fifteen
     }
 
     @Test
@@ -51,7 +51,7 @@ class ComputerTests {
             operator = operator3,
         )
 
-        computer.getResult() shouldBe result
+        computer.result shouldBe result
     }
 
     @Test
@@ -87,7 +87,7 @@ class ComputerTests {
             operator = null,
         )
 
-        computer.getResult() shouldBe result
+        computer.result shouldBe result
     }
 
     @Test
@@ -105,13 +105,13 @@ class ComputerTests {
             number = null,
             operator = null,
         )
-        computer.getResult() shouldBe fifteen
+        computer.result shouldBe fifteen
 
         computer.addOperation(
             number = fifteen,
             operator = null,
         )
-        computer.getResult() shouldBe fifteen
+        computer.result shouldBe fifteen
     }
 
     @Test
@@ -125,7 +125,7 @@ class ComputerTests {
         val result = 39.0
 
         computer.removeLastOperation()
-        computer.getResult() shouldBe 0.0
+        computer.result shouldBe 0.0
 
         computer.addOperation(
             number = thirtyNine,
@@ -139,11 +139,11 @@ class ComputerTests {
 
         computer.removeLastOperation()
 
-        computer.getResult() shouldBe result
+        computer.result shouldBe result
 
         computer.removeLastOperation()
 
-        computer.getResult() shouldBe 0.0
+        computer.result shouldBe 0.0
     }
 
     @Test
@@ -170,9 +170,9 @@ class ComputerTests {
             operator = null,
         )
 
-        computer.getResult() shouldBe result1
+        computer.result shouldBe result1
         computer.removeLastOperation()
-        computer.getResult() shouldBe 0.0
+        computer.result shouldBe 0.0
 
         computer.addOperation(
             number = thirteen,
@@ -184,7 +184,7 @@ class ComputerTests {
             operator = null,
         )
 
-        computer.getResult() shouldBe result2
+        computer.result shouldBe result2
     }
 
     @Test
@@ -215,6 +215,6 @@ class ComputerTests {
             number = pointTwo,
             operator = operator3,
         )
-        computer.getResult() shouldBe result
+        computer.result shouldBe result
     }
 }

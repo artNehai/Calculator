@@ -6,7 +6,14 @@ import com.example.calculator.Operator.Multiply
 import com.example.calculator.Operator.Subtract
 
 class Computer {
-    private var result = 0.0
+    var result = 0.0
+        get() {
+            val result = field
+            reset()
+            return result
+        }
+        private set
+
     private var lastOperator = Add
     private val history = mutableListOf<Operation>()
 
@@ -29,13 +36,6 @@ class Computer {
         val removedOperation = history.removeLast()
         lastOperator = removedOperation.operator
         calculateResult()
-    }
-
-    fun getResult(): Double {
-        val buffer = result
-        result = 0.0
-        history.clear()
-        return buffer
     }
 
     fun reset() {
