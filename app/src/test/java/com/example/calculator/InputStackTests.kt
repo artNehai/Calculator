@@ -53,14 +53,36 @@ class InputStackTests {
 
         input.append(seven)
         input.append(three)
+
         input.pop()
-
         input.getNumber() shouldBe result
-
         input.getNumber() shouldBe null
 
         input.pop()
         input.getNumber() shouldBe result
+
+        input.pop()
+        input.pop()
+        input.getNumber() shouldBe null
+    }
+
+    @Test
+    fun `test getting accumulated number`() {
+        val input = InputStack()
+
+        val point = "."
+        val two = "2"
+        val result1 = 0.0
+        val result2 = 0.2
+
+        input.getNumber() shouldBe null
+
+        input.append(point)
+        input.getNumber() shouldBe result1
+
+        input.append(point)
+        input.append(two)
+        input.getNumber() shouldBe result2
     }
 
     @Test
