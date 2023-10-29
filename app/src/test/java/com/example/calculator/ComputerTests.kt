@@ -173,4 +173,35 @@ class ComputerTests {
 
         computer.getResult() shouldBe result2
     }
+
+    @Test
+    fun `test resetting history of operations`() {
+        val computer = Computer()
+
+        val sixtySix = 66.0
+        val eleven = 11.0
+        val pointTwo = 0.2
+        val operator1 = Divide
+        val operator2 = Multiply
+        val operator3 = Subtract
+        val result = 0.2
+
+
+        computer.addOperation(
+            number = sixtySix,
+            operator = operator1,
+        )
+        computer.addOperation(
+            number = eleven,
+            operator = operator2,
+        )
+
+        computer.reset()
+
+        computer.addOperation(
+            number = pointTwo,
+            operator = operator3,
+        )
+        computer.getResult() shouldBe result
+    }
 }
