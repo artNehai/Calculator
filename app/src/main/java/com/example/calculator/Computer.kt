@@ -38,6 +38,12 @@ class Computer {
         return buffer
     }
 
+    fun reset() {
+        history.clear()
+        result = 0.0
+        lastOperator = Add
+    }
+
     private fun calculateResult() {
         val reducedHistory = history.toMutableList()
         reducedHistory.mergeOnly { operator ->

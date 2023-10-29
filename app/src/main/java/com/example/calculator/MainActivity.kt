@@ -21,11 +21,8 @@ class MainActivity : ComponentActivity() {
                 Application(
                     displayText = displayText,
                     onEraseButtonClick = erase@{
-                        if (isEqualsClicked) {
-                            displayText = ""
-                            stack.reset()
-                            isEqualsClicked = false
-                            return@erase
+                        resetIf(isEqualsClicked).also { isReset ->
+                            if (isReset) return@erase
                         }
                         if (stack.isEmpty()) {
                             computer.removeLastOperation()
@@ -34,15 +31,12 @@ class MainActivity : ComponentActivity() {
                         displayText = displayText.dropLast(1)
                     },
                     onNumberButtonClick = { input ->
-                        if (isEqualsClicked) {
-                            displayText = ""
-                            stack.reset()
-                            isEqualsClicked = false
-                        }
+                        resetIf(isEqualsClicked)
                         stack.append(input)
                         displayText += input
                     },
                     onDecimalSeparatorClick = { separator ->
+                        resetIf(isEqualsClicked)
                         if (!isDecimalSeparatorClicked) {
                             stack.append(separator)
                             displayText += separator
@@ -50,6 +44,8 @@ class MainActivity : ComponentActivity() {
                         }
                     },
                     onOperatorButtonClick = { operator ->
+                        resetIf(isEqualsClicked)
+
                         val number = stack.getNumber()
                         computer.addOperation(
                             number = number,
@@ -72,6 +68,18 @@ class MainActivity : ComponentActivity() {
                     },
                 )
             }
+        }
+    }
+
+    private fun resetIf(condition: Boolean): Boolean {
+        return if (condition) {
+            displayText = ""
+            stack.reset()
+            computer.reset()
+            isEqualsClicked = false
+            true
+        } else {
+            false
         }
     }
 }
