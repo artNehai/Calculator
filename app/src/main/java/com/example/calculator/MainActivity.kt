@@ -57,12 +57,19 @@ class MainActivity : ComponentActivity() {
                         displayText += operator.sign()
                         isDecimalSeparatorClicked = false
                     },
-                    onEqualsButtonClick = {
+                    onEqualsButtonClick = equals@{
+                        if (isEqualsClicked) return@equals
                         computer.addOperation(
                             number = stack.getNumber(),
                             operator = null,
                         )
-                        displayText += "=${computer.result}"
+                        val result =
+                            try {
+                                computer.getResult().toString()
+                            } catch (e: ArithmeticException) {
+                                e.message
+                            }
+                        displayText += "=$result"
                         isDecimalSeparatorClicked = false
                         isEqualsClicked = true
                     },

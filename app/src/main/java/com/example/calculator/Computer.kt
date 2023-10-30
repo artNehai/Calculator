@@ -6,16 +6,9 @@ import com.example.calculator.Operator.Multiply
 import com.example.calculator.Operator.Subtract
 
 class Computer {
-    var result = 0.0
-        get() {
-            val result = field
-            reset()
-            return result
-        }
-        private set
-
-    private var lastOperator = Add
     private val history = mutableListOf<Operation>()
+    private var result: Double? = 0.0
+    private var lastOperator = Add
 
     fun addOperation(
         number: Double?,
@@ -24,9 +17,16 @@ class Computer {
         if (number == null && operator == null) {
             return
         }
+        if (result == null) {
+            return
+        }
         if (number != null) {
             history += Operation(lastOperator, number)
-            calculateResult()
+            try {
+                calculateResult()
+            } catch (e: ArithmeticException) {
+                result = null
+            }
         }
         lastOperator = operator ?: Add
     }
@@ -36,6 +36,12 @@ class Computer {
         val removedOperation = history.removeLast()
         lastOperator = removedOperation.operator
         calculateResult()
+    }
+
+    fun getResult(): Double {
+        val buffer = result
+        reset()
+        return buffer ?: throw ZeroDivisionException
     }
 
     fun reset() {
@@ -74,7 +80,11 @@ class Computer {
         val a = this.number
         val b = other.number
         val result = when (other.operator) {
-            Divide -> a / b
+            Divide -> {
+                if (b == 0.0) throw ZeroDivisionException
+                a / b
+            }
+
             Multiply -> a * b
             Subtract -> a - b
             Add -> a + b
@@ -89,4 +99,6 @@ class Computer {
         val operator: Operator,
         val number: Double,
     )
+
+    private val ZeroDivisionException = ArithmeticException("Can't divide by zero")
 }
