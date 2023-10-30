@@ -63,13 +63,15 @@ class MainActivity : ComponentActivity() {
                             number = stack.getNumber(),
                             operator = null,
                         )
+
                         val result =
                             try {
-                                computer.getResult().toString()
+                                computer.getResult()
                             } catch (e: ArithmeticException) {
                                 e.message
-                            }
-                        displayText += "=$result"
+                            }.toString()
+
+                        displayText += "=${result.dropZeroDecimalPart()}"
                         isDecimalSeparatorClicked = false
                         isEqualsClicked = true
                     },
@@ -89,4 +91,11 @@ class MainActivity : ComponentActivity() {
             false
         }
     }
+
+    private fun String.dropZeroDecimalPart(): String =
+        if (matches("\\d+\\.0".toRegex())) {
+            substringBefore(".")
+        } else {
+            this
+        }
 }
