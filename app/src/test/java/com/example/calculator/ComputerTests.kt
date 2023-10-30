@@ -4,6 +4,7 @@ import com.example.calculator.Operator.Add
 import com.example.calculator.Operator.Divide
 import com.example.calculator.Operator.Multiply
 import com.example.calculator.Operator.Subtract
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.Test
 
@@ -185,6 +186,35 @@ class ComputerTests {
         )
 
         computer.getResult() shouldBe result2
+    }
+
+    @Test
+    fun `test division by zero handling`() {
+        val computer = Computer()
+
+        val four = 4.0
+        val zero = 0.0
+        val seven = 7.0
+        val operator1 = Divide
+        val operator2 = Add
+        val operator3 = Subtract
+
+
+        computer.addOperation(
+            number = four,
+            operator = operator1,
+        )
+        computer.addOperation(
+            number = zero,
+            operator = operator2,
+        )
+        computer.addOperation(
+            number = seven,
+            operator = operator3,
+        )
+        shouldThrow<ArithmeticException> {
+            computer.getResult()
+        }
     }
 
     @Test
