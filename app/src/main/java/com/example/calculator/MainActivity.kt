@@ -3,14 +3,11 @@ package com.example.calculator
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
     private val stack = InputStack()
     private val computer = Computer()
-    private var displayText by mutableStateOf("")
+    private val display = Display()
     private var isEqualsClicked = false
     private var isDecimalSeparatorClicked = false
 
@@ -19,7 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CalculatorTheme {
                 Application(
-                    displayText = displayText,
+                    displayText = display.content,
                     onEraseButtonClick = erase@{
                         resetIf(isEqualsClicked).also { isReset ->
                             if (isReset) return@erase
@@ -28,18 +25,18 @@ class MainActivity : ComponentActivity() {
                             computer.removeLastOperation()
                         }
                         stack.pop()
-                        displayText = displayText.dropLast(1)
+                        display.eraseLast()
                     },
                     onNumberButtonClick = { input ->
                         resetIf(isEqualsClicked)
                         stack.append(input)
-                        displayText += input
+                        display.append(input)
                     },
                     onDecimalSeparatorClick = { separator ->
                         resetIf(isEqualsClicked)
                         if (!isDecimalSeparatorClicked) {
                             stack.append(separator)
-                            displayText += separator
+                            display.append(separator)
                             isDecimalSeparatorClicked = true
                         }
                     },
@@ -52,9 +49,10 @@ class MainActivity : ComponentActivity() {
                             operator = operator,
                         )
                         if (number == null) {
-                            displayText = displayText.dropLast(1)
+                            display.replaceLastWith(operator.sign())
+                        } else {
+                            display.append(operator.sign())
                         }
-                        displayText += operator.sign()
                         isDecimalSeparatorClicked = false
                     },
                     onEqualsButtonClick = equals@{
@@ -71,7 +69,7 @@ class MainActivity : ComponentActivity() {
                                 e.message
                             }.toString()
 
-                        displayText += "=${result.dropZeroDecimalPart()}"
+                        display.append("=${result.dropZeroDecimalPart()}")
                         isDecimalSeparatorClicked = false
                         isEqualsClicked = true
                     },
@@ -82,7 +80,7 @@ class MainActivity : ComponentActivity() {
 
     private fun resetIf(condition: Boolean): Boolean {
         return if (condition) {
-            displayText = ""
+            display.reset()
             stack.reset()
             computer.reset()
             isEqualsClicked = false

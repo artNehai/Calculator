@@ -6,6 +6,7 @@ import com.example.calculator.Operator.Multiply
 import com.example.calculator.Operator.Subtract
 
 class Computer {
+
     private val history = mutableListOf<Operation>()
     private var result: Double? = 0.0
     private var lastOperator = Add
