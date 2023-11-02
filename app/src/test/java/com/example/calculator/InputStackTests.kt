@@ -7,99 +7,100 @@ class InputStackTests {
 
     @Test
     fun `test appending a prime number`() {
-        val input = InputStack()
+        val stack = InputStack()
 
         val twentyThree = "23"
         val result = 23.0
 
-        input.append(twentyThree)
+        stack.append(twentyThree)
 
-        input.getNumber() shouldBe result
+        stack.getNumber() shouldBe result
     }
 
     @Test
     fun `test appending a decimal number`() {
-        val input = InputStack()
+        val stack = InputStack()
 
         val thirtyTwoPointOne = "32.1"
         val result = 32.1
 
-        input.append(thirtyTwoPointOne)
+        stack.append(thirtyTwoPointOne)
 
-        input.getNumber() shouldBe result
+        stack.getNumber() shouldBe result
     }
 
     @Test
     fun `test appending two consecutive inputs`() {
-        val input = InputStack()
+        val stack = InputStack()
 
         val five = "5"
         val eleven = "11"
         val result = 511.0
 
-        input.append(five)
-        input.append(eleven)
+        stack.append(five)
+        stack.append(eleven)
 
-        input.getNumber() shouldBe result
+        stack.getNumber() shouldBe result
     }
 
     @Test
     fun `test popping last symbol`() {
-        val input = InputStack()
+        val stack = InputStack()
 
         val seven = "7"
         val three = "3"
-        val result = 7.0
+        val result1 = 7.0
+        val result2 = 0.0
 
-        input.append(seven)
-        input.append(three)
+        stack.append(seven)
+        stack.append(three)
 
-        input.pop()
-        input.getNumber() shouldBe result
-        input.getNumber() shouldBe null
+        stack.pop()
+        stack.getNumber() shouldBe result1
+        stack.getNumber() shouldBe null
 
-        input.pop()
-        input.getNumber() shouldBe result
+        stack.pop()
+        stack.getNumber() shouldBe result1
 
-        input.pop()
-        input.pop()
-        input.getNumber() shouldBe null
+        stack.pop()
+        stack.pop()
+        stack.getNumber() shouldBe result2
     }
 
     @Test
     fun `test getting accumulated number`() {
-        val input = InputStack()
+        val stack = InputStack()
 
         val point = "."
         val two = "2"
         val result1 = 0.0
         val result2 = 0.2
 
-        input.getNumber() shouldBe null
+        stack.getNumber() shouldBe result1
 
-        input.append(point)
-        input.getNumber() shouldBe result1
+        stack.append(point)
+        stack.getNumber() shouldBe result1
 
-        input.append(point)
-        input.append(two)
-        input.getNumber() shouldBe result2
+        stack.append(point)
+        stack.append(two)
+        stack.getNumber() shouldBe result2
     }
 
     @Test
     fun `test resetting input history`() {
-        val input = InputStack()
+        val stack = InputStack()
 
         val two = "2"
         val eight = "8"
 
-        input.append(two)
-        input.getNumber()
+        stack.append(two)
+        stack.getNumber()
 
-        input.append(eight)
-        input.getNumber()
+        stack.append(eight)
+        stack.getNumber()
 
-        input.reset()
+        stack.reset()
 
-        input.getNumber() shouldBe null
+        stack.getNumber() shouldBe 0.0
     }
 }
