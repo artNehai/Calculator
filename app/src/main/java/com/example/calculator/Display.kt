@@ -19,7 +19,7 @@ class Display {
     }
 
     fun replaceLastWith(newSymbol: String) {
-        content.dropLast(1)
+        content = content.dropLast(1)
         content += newSymbol
     }
 
