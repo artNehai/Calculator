@@ -2,9 +2,10 @@ package com.example.calculator
 
 class InputStack {
 
-    private val zeroString = "0"
-    private var accumulatedString = zeroString
     private val history = mutableListOf<String>()
+    private val zeroString = "0"
+    var accumulatedString = zeroString
+        private set
 
     fun append(input: String) {
         if (accumulatedString == zeroString) {
@@ -51,6 +52,4 @@ class InputStack {
         history.clear()
         accumulatedString = zeroString
     }
-
-    fun isEmpty() = accumulatedString.isEmpty()
 }

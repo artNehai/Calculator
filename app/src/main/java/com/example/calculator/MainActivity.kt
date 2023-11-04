@@ -9,7 +9,6 @@ class MainActivity : ComponentActivity() {
     private val computer = Computer()
     private val display = Display()
     private var isEqualsClicked = false
-    private var isDecimalSeparatorClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +20,7 @@ class MainActivity : ComponentActivity() {
                         resetIf(isEqualsClicked).also { isReset ->
                             if (isReset) return@erase
                         }
-                        if (stack.isEmpty()) {
+                        if (stack.accumulatedString.isEmpty()) {
                             computer.removeLastOperation()
                         }
                         stack.pop()
@@ -32,13 +31,13 @@ class MainActivity : ComponentActivity() {
                         stack.append(input)
                         display.append(input)
                     },
-                    onDecimalSeparatorClick = { separator ->
+                    onDecimalSeparatorClick = decimal@{ separator ->
                         resetIf(isEqualsClicked)
-                        if (!isDecimalSeparatorClicked) {
-                            stack.append(separator)
-                            display.append(separator)
-                            isDecimalSeparatorClicked = true
+                        if (stack.accumulatedString.contains(separator)) {
+                            return@decimal
                         }
+                        stack.append(separator)
+                        display.append(separator)
                     },
                     onOperatorButtonClick = { operator ->
                         resetIf(isEqualsClicked)
@@ -53,7 +52,6 @@ class MainActivity : ComponentActivity() {
                         } else {
                             display.append(operator.sign())
                         }
-                        isDecimalSeparatorClicked = false
                     },
                     onEqualsButtonClick = equals@{
                         if (isEqualsClicked) return@equals
@@ -70,7 +68,6 @@ class MainActivity : ComponentActivity() {
                             }.toString()
 
                         display.append("=${result.dropZeroDecimalPart()}")
-                        isDecimalSeparatorClicked = false
                         isEqualsClicked = true
                     },
                 )
