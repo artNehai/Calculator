@@ -8,7 +8,8 @@ class MainActivity : ComponentActivity() {
     private val stack = InputStack()
     private val computer = Computer()
     private val display = Display()
-    private var isEqualsClicked = false
+    private val isEqualsClicked
+        get() = display.content.contains("=")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,9 +18,8 @@ class MainActivity : ComponentActivity() {
                 Application(
                     displayText = display.content,
                     onEraseButtonClick = erase@{
-                        resetIf(isEqualsClicked).also { isReset ->
-                            if (isReset) return@erase
-                        }
+                        resetIf(isEqualsClicked)
+                        if (isEqualsClicked) return@erase
                         if (stack.accumulatedString.isEmpty()) {
                             computer.removeLastOperation()
                         }
@@ -41,7 +41,6 @@ class MainActivity : ComponentActivity() {
                     },
                     onOperatorButtonClick = { operator ->
                         resetIf(isEqualsClicked)
-
                         val number = stack.getNumber()
                         computer.addOperation(
                             number = number,
@@ -59,31 +58,24 @@ class MainActivity : ComponentActivity() {
                             number = stack.getNumber(),
                             operator = null,
                         )
-
                         val result =
                             try {
                                 computer.getResult()
                             } catch (e: ArithmeticException) {
                                 e.message
                             }.toString()
-
                         display.append("=${result.dropZeroDecimalPart()}")
-                        isEqualsClicked = true
                     },
                 )
             }
         }
     }
 
-    private fun resetIf(condition: Boolean): Boolean {
-        return if (condition) {
+    private fun resetIf(condition: Boolean) {
+        if (condition) {
             display.reset()
             stack.reset()
             computer.reset()
-            isEqualsClicked = false
-            true
-        } else {
-            false
         }
     }
 
