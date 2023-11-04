@@ -2,16 +2,22 @@ package com.example.calculator
 
 class InputStack {
 
-    private var accumulatedString = ""
+    private val zeroString = "0"
+    private var accumulatedString = zeroString
     private val history = mutableListOf<String>()
 
     fun append(input: String) {
+        if (accumulatedString == zeroString) {
+            accumulatedString = ""
+        }
         accumulatedString += input
     }
 
     fun pop() {
         when {
-            accumulatedString.isEmpty() && history.isEmpty() -> return
+            accumulatedString == zeroString && history.isEmpty() -> {
+                return
+            }
 
             accumulatedString.isEmpty() && history.isNotEmpty() -> {
                 accumulatedString = history.last()
@@ -20,9 +26,12 @@ class InputStack {
 
             else -> {
                 accumulatedString = accumulatedString.dropLast(1)
+
+                if (accumulatedString.isEmpty() && history.isEmpty()) {
+                    accumulatedString = zeroString
+                }
             }
         }
-
     }
 
     fun getNumber(): Double? {
@@ -40,7 +49,7 @@ class InputStack {
 
     fun reset() {
         history.clear()
-        accumulatedString = ""
+        accumulatedString = zeroString
     }
 
     fun isEmpty() = accumulatedString.isEmpty()

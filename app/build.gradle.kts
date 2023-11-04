@@ -65,5 +65,6 @@ dependencies {
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("io.kotest:kotest-assertions-core:5.7.2")
+    testImplementation("org.robolectric:robolectric:4.9")
     debugImplementation("androidx.compose.ui:ui-tooling")
 }
