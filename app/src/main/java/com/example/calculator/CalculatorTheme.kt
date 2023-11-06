@@ -1,7 +1,9 @@
 package com.example.calculator
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -29,16 +31,29 @@ fun CalculatorTheme(
         ),
     )
 
-    val materialColorScheme = lightColorScheme()
     MaterialTheme(
-        colorScheme = materialColorScheme.copy(
-            primary = Color(0xff548964),
-            primaryContainer = Color(0xff42A610),
-            onPrimaryContainer = Color(0xffECFFDE),
-            secondary = Color(0xffEEEEF0),
-            onSecondary = Color(0xff504F54),
-            onBackground = Color(0xff43484C),
-        ),
+        colorScheme =
+        if (isSystemInDarkTheme()) {
+            darkColorScheme().copy(
+                primary = Color(0xff548964),
+                primaryContainer = Color(0xff42A610),
+                onPrimaryContainer = Color(0xffECFFDE),
+                secondary = Color(0xff171717),
+                onSecondary = Color(0xffF2F2F2),
+                background = Color(0xff010101),
+                onBackground = Color(0xffF2F2F2),
+            )
+
+        } else {
+            lightColorScheme().copy(
+                primary = Color(0xff548964),
+                primaryContainer = Color(0xff42A610),
+                onPrimaryContainer = Color(0xffECFFDE),
+                secondary = Color(0xffEEEEF0),
+                onSecondary = Color(0xff504F54),
+                onBackground = Color(0xff504F54),
+            )
+        },
         typography = configureAppFont(
             fontFamily = robotoMonoFont,
             fontSize = 24.sp
