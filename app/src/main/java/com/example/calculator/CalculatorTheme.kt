@@ -25,7 +25,7 @@ fun CalculatorTheme(
     val robotoMonoFont = FontFamily(
         Font(
             googleFont = GoogleFont(
-                name = "Dosis",
+                name = "Roboto",
             ),
             fontProvider = fontProvider,
         ),
@@ -35,10 +35,10 @@ fun CalculatorTheme(
         colorScheme =
         if (isSystemInDarkTheme()) {
             darkColorScheme().copy(
-                primary = Color(0xff548964),
+                primary = Color(0xFF319951),
                 primaryContainer = Color(0xff42A610),
                 onPrimaryContainer = Color(0xffECFFDE),
-                secondary = Color(0xff171717),
+                secondary = Color(0xFF202020),
                 onSecondary = Color(0xffF2F2F2),
                 background = Color(0xff010101),
                 onBackground = Color(0xffF2F2F2),
@@ -56,7 +56,7 @@ fun CalculatorTheme(
         },
         typography = configureAppFont(
             fontFamily = robotoMonoFont,
-            fontSize = 24.sp
+            fontSize = 28.sp
         ),
         content = content,
     )

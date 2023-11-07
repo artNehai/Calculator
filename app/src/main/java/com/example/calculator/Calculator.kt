@@ -1,5 +1,6 @@
 package com.example.calculator
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,7 +29,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.calculator.Operator.Add
 import com.example.calculator.Operator.Divide
 import com.example.calculator.Operator.Multiply
@@ -161,6 +164,7 @@ private fun Display(
     ) {
         Text(
             text = text,
+            fontSize = 40.sp,
         )
     }
 }
@@ -172,7 +176,7 @@ private fun NumpadRow(
 ) =
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(24.dp),
+        horizontalArrangement = Arrangement.spacedBy(20.dp),
         content = content,
     )
 
@@ -260,7 +264,7 @@ private fun InputButton(
     ),
     content: @Composable () -> Unit,
 ) {
-    val maxSize = 64.dp
+    val maxSize = 68.dp
     Button(
         onClick = onClick,
         modifier = modifier
@@ -270,7 +274,8 @@ private fun InputButton(
             )
             .aspectRatio(1f),
         colors = colors,
-        contentPadding = PaddingValues(all = 16.dp),
+        border = BorderStroke(width = Dp.Hairline, color = Color(0x4AEEEEF0)),
+        contentPadding = PaddingValues(all = 8.dp),
     ) {
         content()
     }
