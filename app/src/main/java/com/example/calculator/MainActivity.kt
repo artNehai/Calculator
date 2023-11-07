@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
                             } catch (e: ArithmeticException) {
                                 e.message
                             }.toString()
-                        display.append("=${result.dropZeroDecimalPart()}")
+                        display.append("\n=${result.dropZeroDecimalPart()}")
                     },
                 )
             }
