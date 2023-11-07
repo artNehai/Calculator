@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -165,6 +166,8 @@ private fun Display(
         Text(
             text = text,
             fontSize = 40.sp,
+            textAlign = TextAlign.End,
+            lineHeight = 48.sp
         )
     }
 }
