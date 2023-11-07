@@ -26,6 +26,9 @@ class MainActivity : ComponentActivity() {
                         stack.pop()
                         display.eraseLast()
                     },
+                    onEraseButtonLongClick = {
+                        resetContextIf(true)
+                    },
                     onNumberButtonClick = { input ->
                         resetContextIf(isEqualsClicked)
                         stack.append(input)

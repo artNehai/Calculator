@@ -1,6 +1,8 @@
 package com.example.calculator
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,7 +13,9 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Backspace
 import androidx.compose.material3.Button
@@ -19,15 +23,17 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -42,6 +48,7 @@ import com.example.calculator.Operator.Subtract
 fun Calculator(
     displayText: String,
     onEraseButtonClick: () -> Unit,
+    onEraseButtonLongClick: () -> Unit,
     onNumberButtonClick: (String) -> Unit,
     onDecimalSeparatorClick: (String) -> Unit,
     onOperatorButtonClick: (Operator) -> Unit,
@@ -60,7 +67,8 @@ fun Calculator(
         )
 
         EraseButton(
-            onEraseButtonClick = onEraseButtonClick,
+            onClick = onEraseButtonClick,
+            onLongClick = onEraseButtonLongClick,
             modifier = Modifier
                 .align(Alignment.End),
         )
@@ -183,18 +191,29 @@ private fun NumpadRow(
         content = content,
     )
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun EraseButton(
-    onEraseButtonClick: () -> Unit,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    IconButton(
-        onClick = onEraseButtonClick,
-        modifier = modifier,
+    Surface(
+        modifier = modifier
+            .clip(CircleShape)
+            .combinedClickable(
+                role = Role.Button,
+                onClick = onClick,
+                onLongClick = onLongClick,
+            ),
+        color = Color.Transparent,
     ) {
         Icon(
             imageVector = Icons.Outlined.Backspace,
             contentDescription = null,
+            modifier = Modifier
+                .size(44.dp)
+                .padding(8.dp),
             tint = MaterialTheme.colorScheme.primary,
         )
     }
@@ -297,6 +316,7 @@ private fun CalculatorPreview() {
         Calculator(
             displayText = "43",
             onEraseButtonClick = {},
+            onEraseButtonLongClick = {},
             onNumberButtonClick = {},
             onDecimalSeparatorClick = {},
             onOperatorButtonClick = {},

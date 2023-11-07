@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 fun Application(
     displayText: String,
     onEraseButtonClick: () -> Unit,
+    onEraseButtonLongClick: () -> Unit,
     onNumberButtonClick: (String) -> Unit,
     onDecimalSeparatorClick: (String) -> Unit,
     onOperatorButtonClick: (Operator) -> Unit,
@@ -21,6 +22,7 @@ fun Application(
         Calculator(
             displayText = displayText,
             onEraseButtonClick = onEraseButtonClick,
+            onEraseButtonLongClick = onEraseButtonLongClick,
             onNumberButtonClick = onNumberButtonClick,
             onDecimalSeparatorClick = onDecimalSeparatorClick,
             onOperatorButtonClick = onOperatorButtonClick,
@@ -38,6 +40,7 @@ private fun CalculatorThemePreview() {
         Application(
             displayText = "43",
             onEraseButtonClick = {},
+            onEraseButtonLongClick = {},
             onNumberButtonClick = {},
             onDecimalSeparatorClick = {},
             onOperatorButtonClick = {},
