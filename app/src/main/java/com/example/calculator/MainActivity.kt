@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
                 Application(
                     displayText = display.content,
                     onEraseButtonClick = erase@{
-                        resetIf(isEqualsClicked)
+                        resetContextIf(isEqualsClicked)
                         if (isEqualsClicked) return@erase
                         if (stack.accumulatedString.isEmpty()) {
                             computer.removeLastOperation()
@@ -27,12 +27,12 @@ class MainActivity : ComponentActivity() {
                         display.eraseLast()
                     },
                     onNumberButtonClick = { input ->
-                        resetIf(isEqualsClicked)
+                        resetContextIf(isEqualsClicked)
                         stack.append(input)
                         display.append(input)
                     },
                     onDecimalSeparatorClick = decimal@{ separator ->
-                        resetIf(isEqualsClicked)
+                        resetContextIf(isEqualsClicked)
                         if (stack.accumulatedString.contains(separator)) {
                             return@decimal
                         }
@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
                         display.append(separator)
                     },
                     onOperatorButtonClick = { operator ->
-                        resetIf(isEqualsClicked)
+                        resetContextIf(isEqualsClicked)
                         val number = stack.getNumber()
                         computer.addOperation(
                             number = number,
@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun resetIf(condition: Boolean) {
+    private fun resetContextIf(condition: Boolean) {
         if (condition) {
             display.reset()
             stack.reset()
