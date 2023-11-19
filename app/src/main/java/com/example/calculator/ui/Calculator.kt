@@ -1,4 +1,4 @@
-package com.example.calculator
+package com.example.calculator.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -39,10 +39,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.calculator.ui.theme.CalculatorTheme
+import com.example.calculator.Operator
 import com.example.calculator.Operator.Add
 import com.example.calculator.Operator.Divide
 import com.example.calculator.Operator.Multiply
 import com.example.calculator.Operator.Subtract
+import com.example.calculator.R
 
 @Composable
 fun Calculator(
