@@ -38,14 +38,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.calculator.ui.theme.CalculatorTheme
 import com.example.calculator.Operator
 import com.example.calculator.Operator.Add
 import com.example.calculator.Operator.Divide
 import com.example.calculator.Operator.Multiply
 import com.example.calculator.Operator.Subtract
 import com.example.calculator.R
+import com.example.calculator.ui.theme.CalculatorTheme
 
 @Composable
 fun Calculator(
@@ -176,9 +175,8 @@ private fun Display(
     ) {
         Text(
             text = text,
-            fontSize = 40.sp,
             textAlign = TextAlign.End,
-            lineHeight = 48.sp
+            style = MaterialTheme.typography.displayLarge
         )
     }
 }
@@ -275,7 +273,10 @@ private fun NumberButton(
         onClick = onClick,
         modifier = modifier,
     ) {
-        Text(text)
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium,
+        )
     }
 }
 

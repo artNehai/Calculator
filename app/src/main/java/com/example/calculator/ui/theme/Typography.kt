@@ -23,67 +23,53 @@ private val RobotoMonoFont = FontFamily(
     ),
 )
 
-private val FontSize = 28.sp
-
 val Typography = Typography(
     displayLarge = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
+        fontSize = 40.sp,
+        lineHeight = 48.sp,
     ),
     displayMedium = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     displaySmall = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     headlineLarge = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     headlineMedium = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     headlineSmall = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     titleLarge = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     titleMedium = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     titleSmall = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     bodyLarge = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     bodyMedium = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
+        fontSize = 28.sp,
     ),
     bodySmall = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     labelLarge = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     labelMedium = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
     labelSmall = TextStyle(
         fontFamily = RobotoMonoFont,
-        fontSize = FontSize,
     ),
 )
